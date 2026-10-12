@@ -1,6 +1,6 @@
 class_name Crawler
 extends CharacterBody2D
-## Escarabajo musgoso: el enemigo más simple posible.
+## Dron rastrero de seguridad: el enemigo más simple posible.
 ## Camina, se da vuelta al chocar una pared o al llegar a un borde,
 ## y daña al jugador por contacto.
 ##

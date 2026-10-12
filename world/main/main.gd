@@ -101,7 +101,7 @@ func _respawn() -> void:
 	var room_path := GameState.respawn_room_path
 	var spawn_id := GameState.respawn_spawn_id
 	if room_path == "":
-		room_path = starting_room_path  # nunca descansó en un santuario
+		room_path = starting_room_path  # nunca se conectó a una terminal
 		spawn_id = ""
 
 	player.revive()

@@ -8,7 +8,7 @@ extends Node
 ## Regla del equipo: solo van acá eventos que cruzan escenas.
 ## Si dos nodos están en la misma escena, conéctenlos directamente.
 
-## Una puerta pide cambiar de sala. spawn_id = id de la puerta/santuario donde aparecer.
+## Una puerta pide cambiar de sala. spawn_id = id de la puerta/terminal donde aparecer.
 @warning_ignore("unused_signal")
 signal room_change_requested(room_path: String, spawn_id: String)
 

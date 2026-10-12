@@ -1,60 +1,102 @@
 [gd_scene format=4]
 
-[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_nhe8r"]
-[ext_resource type="PackedScene" path="res://world/objects/fireflies.tscn" id="2_kikhn"]
-[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="3_g8pac"]
-[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="4_brqg5"]
-[ext_resource type="PackedScene" path="res://world/objects/save_point.tscn" id="5_ek0ra"]
-[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="6_7lak5"]
-[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="7_6odfs"]
+[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_6odfs"]
+[ext_resource type="PackedScene" path="res://world/objects/neon_sign.tscn" id="2_88d8c"]
+[ext_resource type="Texture2D" path="res://assets/props/lanterns.png" id="3_pp8b3"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_wide.png" id="4_b183j"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_teal.png" id="5_g8t7y"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_white.png" id="6_8w5r0"]
+[ext_resource type="PackedScene" path="res://world/objects/street_lamp.tscn" id="7_sos5c"]
+[ext_resource type="Texture2D" path="res://assets/props/stall.png" id="8_phu7x"]
+[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="9_qw6c3"]
+[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="10_lo3rr"]
+[ext_resource type="PackedScene" path="res://world/objects/save_point.tscn" id="11_c8auo"]
+[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="12_11cf0"]
+[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="13_p1p0l"]
 
-[node name="Room01" type="Node2D" unique_id=967739988]
-script = ExtResource("1_nhe8r")
-room_name = "Ruinas del Umbral"
+[node name="Room01" type="Node2D" unique_id=904086635]
+script = ExtResource("1_6odfs")
+room_name = "Callejón Umbral"
 
-[node name="Fireflies" parent="." unique_id=1144076457 instance=ExtResource("2_kikhn")]
-position = Vector2(400, 160)
-amount = 42
-emission_rect_extents = Vector2(400, 160)
+[node name="Decor" type="Node2D" parent="." unique_id=681587886]
 
-[node name="Tiles" type="TileMapLayer" parent="." unique_id=361028031]
+[node name="NeonSign1" parent="Decor" unique_id=605747566 instance=ExtResource("2_88d8c")]
+position = Vector2(136, 40)
+sign_texture = ExtResource("3_pp8b3")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+
+[node name="NeonSign2" parent="Decor" unique_id=105574573 instance=ExtResource("2_88d8c")]
+position = Vector2(584, 40)
+sign_texture = ExtResource("3_pp8b3")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+
+[node name="NeonSign3" parent="Decor" unique_id=500993202 instance=ExtResource("2_88d8c")]
+position = Vector2(360, 56)
+sign_texture = ExtResource("4_b183j")
+glow_color = Color(1, 0.25, 0.28, 0.5)
+
+[node name="NeonSign4" parent="Decor" unique_id=1510723409 instance=ExtResource("2_88d8c")]
+position = Vector2(232, 88)
+sign_texture = ExtResource("5_g8t7y")
+glow_color = Color(0.15, 0.9, 0.8, 0.55)
+
+[node name="NeonSign5" parent="Decor" unique_id=865776089 instance=ExtResource("2_88d8c")]
+position = Vector2(488, 104)
+
+[node name="NeonSign6" parent="Decor" unique_id=1047404291 instance=ExtResource("2_88d8c")]
+position = Vector2(664, 152)
+sign_texture = ExtResource("6_8w5r0")
+glow_color = Color(1, 0.92, 0.88, 0.45)
+
+[node name="StreetLamp7" parent="Decor" unique_id=108962678 instance=ExtResource("7_sos5c")]
+position = Vector2(360, 272)
+
+[node name="FoodStall8" parent="Decor" unique_id=612477870 instance=ExtResource("2_88d8c")]
+position = Vector2(472, 244)
+sign_texture = ExtResource("8_phu7x")
+glow_color = Color(1, 0.6, 0.25, 0.35)
+
+[node name="StreetLamp9" parent="Decor" unique_id=1108452080 instance=ExtResource("7_sos5c")]
+position = Vector2(728, 272)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=138467737]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAATAAAAAAABAAAAAAAUAAAAAAABAAAAAAAVAAAAAAABAAAAAAAWAAAAAAABAAAAAAAXAAAAAAABAAAAAAAYAAAAAAABAAAAAAAZAAAAAAABAAAAAAAaAAAAAAABAAAAAAAbAAAAAAABAAAAAAAcAAAAAAABAAAAAAAdAAAAAAABAAAAAAAeAAAAAAABAAAAAAAfAAAAAAABAAAAAAAgAAAAAAABAAAAAAAhAAAAAAABAAAAAAAiAAAAAAABAAAAAAAjAAAAAAABAAAAAAAkAAAAAAABAAAAAAAlAAAAAAABAAAAAAAmAAAAAAABAAAAAAAnAAAAAAABAAAAAAAoAAAAAAABAAAAAAApAAAAAAABAAAAAAAqAAAAAAABAAAAAAArAAAAAAABAAAAAAAsAAAAAAABAAAAAAAtAAAAAAABAAAAAAAuAAAAAAABAAAAAAAvAAAAAAABAAAAAAAwAAAAAAABAAAAAAAxAAAAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAAwAAEAAAABAAAAAAAxAAEAAAABAAAAAAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAAwAAIAAAABAAAAAAAxAAIAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAAwAAMAAAABAAAAAAAxAAMAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAAwAAQAAAABAAAAAAAxAAQAAAABAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAAwAAUAAAABAAAAAAAxAAUAAAABAAAAAAAAAAYAAAABAAAAAAABAAYAAAABAAAAAAAwAAYAAAABAAAAAAAxAAYAAAABAAAAAAAAAAcAAAABAAAAAAABAAcAAAABAAAAAAAwAAcAAAABAAAAAAAxAAcAAAABAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAAwAAgAAAABAAAAAAAxAAgAAAABAAAAAAAwAAkAAAABAAAAAAAxAAkAAAABAAAAAAAwAAoAAAABAAAAAAAxAAoAAAABAAAAAAAwAAsAAAABAAAAAAAxAAsAAAABAAAAAAAAAAwAAAAAAAAAAAABAAwAAAAAAAAAAAACAAwAAAAAAAAAAAADAAwAAAAAAAAAAAAEAAwAAAAAAAAAAAAFAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAIAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAwAAwAAAABAAAAAAAxAAwAAAABAAAAAAAAAA0AAAABAAAAAAABAA0AAAABAAAAAAACAA0AAAABAAAAAAADAA0AAAABAAAAAAAEAA0AAAABAAAAAAAFAA0AAAABAAAAAAAGAA0AAAABAAAAAAAHAA0AAAABAAAAAAAIAA0AAAABAAAAAAAJAA0AAAABAAAAAAAYAA0AAAACAAAAAAAZAA0AAAACAAAAAAAaAA0AAAACAAAAAAAbAA0AAAACAAAAAAAcAA0AAAACAAAAAAAdAA0AAAACAAAAAAAwAA0AAAABAAAAAAAxAA0AAAABAAAAAAAAAA4AAAABAAAAAAABAA4AAAABAAAAAAACAA4AAAABAAAAAAADAA4AAAABAAAAAAAEAA4AAAABAAAAAAAFAA4AAAABAAAAAAAGAA4AAAABAAAAAAAHAA4AAAABAAAAAAAIAA4AAAABAAAAAAAJAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAAABAAAAABAAAAAAABABAAAAABAAAAAAACABAAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAHABAAAAABAAAAAAAIABAAAAABAAAAAAAJABAAAAABAAAAAAAAABEAAAABAAAAAAABABEAAAABAAAAAAACABEAAAABAAAAAAADABEAAAABAAAAAAAEABEAAAABAAAAAAAFABEAAAABAAAAAAAGABEAAAABAAAAAAAHABEAAAABAAAAAAAIABEAAAABAAAAAAAJABEAAAABAAAAAAAKABEAAAAAAAAAAAALABEAAAAAAAAAAAAMABEAAAAAAAAAAAANABEAAAAAAAAAAAAOABEAAAAAAAAAAAAPABEAAAAAAAAAAAAQABEAAAAAAAAAAAARABEAAAAAAAAAAAASABEAAAAAAAAAAAATABEAAAAAAAAAAAAUABEAAAAAAAAAAAAVABEAAAAAAAAAAAAWABEAAAAAAAAAAAAXABEAAAAAAAAAAAAYABEAAAAAAAAAAAAZABEAAAAAAAAAAAAaABEAAAAAAAAAAAAbABEAAAAAAAAAAAAcABEAAAAAAAAAAAAdABEAAAAAAAAAAAAeABEAAAAAAAAAAAAfABEAAAAAAAAAAAAgABEAAAAAAAAAAAAhABEAAAAAAAAAAAAiABEAAAAAAAAAAAAjABEAAAAAAAAAAAAkABEAAAAAAAAAAAAlABEAAAAAAAAAAAAmABEAAAAAAAAAAAAnABEAAAAAAAAAAAAoABEAAAAAAAAAAAApABEAAAAAAAAAAAAqABEAAAAAAAAAAAArABEAAAAAAAAAAAAsABEAAAAAAAAAAAAtABEAAAAAAAAAAAAuABEAAAAAAAAAAAAvABEAAAAAAAAAAAAwABEAAAAAAAAAAAAxABEAAAAAAAAAAAAAABIAAAABAAAAAAABABIAAAABAAAAAAACABIAAAABAAAAAAADABIAAAABAAAAAAAEABIAAAABAAAAAAAFABIAAAABAAAAAAAGABIAAAABAAAAAAAHABIAAAABAAAAAAAIABIAAAABAAAAAAAJABIAAAABAAAAAAAKABIAAAABAAAAAAALABIAAAABAAAAAAAMABIAAAABAAAAAAANABIAAAABAAAAAAAOABIAAAABAAAAAAAPABIAAAABAAAAAAAQABIAAAABAAAAAAARABIAAAABAAAAAAASABIAAAABAAAAAAATABIAAAABAAAAAAAUABIAAAABAAAAAAAVABIAAAABAAAAAAAWABIAAAABAAAAAAAXABIAAAABAAAAAAAYABIAAAABAAAAAAAZABIAAAABAAAAAAAaABIAAAABAAAAAAAbABIAAAABAAAAAAAcABIAAAABAAAAAAAdABIAAAABAAAAAAAeABIAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAhABIAAAABAAAAAAAiABIAAAABAAAAAAAjABIAAAABAAAAAAAkABIAAAABAAAAAAAlABIAAAABAAAAAAAmABIAAAABAAAAAAAnABIAAAABAAAAAAAoABIAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAABAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvABIAAAABAAAAAAAwABIAAAABAAAAAAAxABIAAAABAAAAAAAAABMAAAABAAAAAAABABMAAAABAAAAAAACABMAAAABAAAAAAADABMAAAABAAAAAAAEABMAAAABAAAAAAAFABMAAAABAAAAAAAGABMAAAABAAAAAAAHABMAAAABAAAAAAAIABMAAAABAAAAAAAJABMAAAABAAAAAAAKABMAAAABAAAAAAALABMAAAABAAAAAAAMABMAAAABAAAAAAANABMAAAABAAAAAAAOABMAAAABAAAAAAAPABMAAAABAAAAAAAQABMAAAABAAAAAAARABMAAAABAAAAAAASABMAAAABAAAAAAATABMAAAABAAAAAAAUABMAAAABAAAAAAAVABMAAAABAAAAAAAWABMAAAABAAAAAAAXABMAAAABAAAAAAAYABMAAAABAAAAAAAZABMAAAABAAAAAAAaABMAAAABAAAAAAAbABMAAAABAAAAAAAcABMAAAABAAAAAAAdABMAAAABAAAAAAAeABMAAAABAAAAAAAfABMAAAABAAAAAAAgABMAAAABAAAAAAAhABMAAAABAAAAAAAiABMAAAABAAAAAAAjABMAAAABAAAAAAAkABMAAAABAAAAAAAlABMAAAABAAAAAAAmABMAAAABAAAAAAAnABMAAAABAAAAAAAoABMAAAABAAAAAAApABMAAAABAAAAAAAqABMAAAABAAAAAAArABMAAAABAAAAAAAsABMAAAABAAAAAAAtABMAAAABAAAAAAAuABMAAAABAAAAAAAvABMAAAABAAAAAAAwABMAAAABAAAAAAAxABMAAAABAAAAAAA=")
-tile_set = ExtResource("3_g8pac")
+tile_set = ExtResource("9_qw6c3")
 
-[node name="PlayerStart" type="Marker2D" parent="." unique_id=36999550]
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=1764937662]
 position = Vector2(232, 260)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1447290419]
+[node name="Doors" type="Node2D" parent="." unique_id=765853143]
 
-[node name="Door_r01_izq" parent="Doors" unique_id=1810508272 instance=ExtResource("4_brqg5")]
+[node name="Door_r01_izq" parent="Doors" unique_id=6903639 instance=ExtResource("10_lo3rr")]
 position = Vector2(8, 168)
 door_id = "r01_izq"
 target_room_path = "res://world/rooms/room_03.tscn"
 target_door_id = "r03_der"
 
-[node name="Door_r01_der" parent="Doors" unique_id=1727077203 instance=ExtResource("4_brqg5")]
+[node name="Door_r01_der" parent="Doors" unique_id=1437930112 instance=ExtResource("10_lo3rr")]
 position = Vector2(792, 248)
 door_id = "r01_der"
 target_room_path = "res://world/rooms/room_02.tscn"
 target_door_id = "r02_izq"
 spawn_side = -1
 
-[node name="Objects" type="Node2D" parent="." unique_id=814808115]
+[node name="Objects" type="Node2D" parent="." unique_id=2094557438]
 
-[node name="SavePoint" parent="Objects" unique_id=936902239 instance=ExtResource("5_ek0ra")]
+[node name="SavePoint" parent="Objects" unique_id=661010154 instance=ExtResource("11_c8auo")]
 position = Vector2(312, 272)
-save_id = "santuario_umbral"
+save_id = "terminal_umbral"
 
-[node name="Spikes1" parent="Objects" unique_id=1144964140 instance=ExtResource("6_7lak5")]
+[node name="Spikes1" parent="Objects" unique_id=631377393 instance=ExtResource("12_11cf0")]
 position = Vector2(616, 264)
 
-[node name="Spikes2" parent="Objects" unique_id=269270087 instance=ExtResource("6_7lak5")]
+[node name="Spikes2" parent="Objects" unique_id=1649912592 instance=ExtResource("12_11cf0")]
 position = Vector2(632, 264)
 
-[node name="Spikes3" parent="Objects" unique_id=344498761 instance=ExtResource("6_7lak5")]
+[node name="Spikes3" parent="Objects" unique_id=1968141292 instance=ExtResource("12_11cf0")]
 position = Vector2(648, 264)
 
-[node name="Enemies" type="Node2D" parent="." unique_id=338113717]
+[node name="Enemies" type="Node2D" parent="." unique_id=2000371842]
 
-[node name="Crawler1" parent="Enemies" unique_id=1733450048 instance=ExtResource("7_6odfs")]
+[node name="Crawler1" parent="Enemies" unique_id=1866010616 instance=ExtResource("13_p1p0l")]
 position = Vector2(536, 267)

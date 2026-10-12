@@ -1,62 +1,85 @@
 [gd_scene format=4]
 
-[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_ckuuj"]
-[ext_resource type="PackedScene" path="res://world/objects/fireflies.tscn" id="2_8gn8q"]
-[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="3_cm8wi"]
-[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="4_biu46"]
-[ext_resource type="PackedScene" path="res://world/objects/ability_pickup.tscn" id="5_j1hpd"]
-[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="6_mhl1b"]
-[ext_resource type="PackedScene" path="res://world/objects/save_point.tscn" id="7_c2liu"]
-[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="8_ltumg"]
+[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_j1hpd"]
+[ext_resource type="PackedScene" path="res://world/objects/neon_sign.tscn" id="2_mhl1b"]
+[ext_resource type="Texture2D" path="res://assets/props/lanterns.png" id="3_c2liu"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_teal.png" id="4_ltumg"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_orange.png" id="5_r7d1y"]
+[ext_resource type="PackedScene" path="res://world/objects/street_lamp.tscn" id="6_7d42b"]
+[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="7_vtrdb"]
+[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="8_u01mb"]
+[ext_resource type="PackedScene" path="res://world/objects/ability_pickup.tscn" id="9_tuh35"]
+[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="10_mdnxf"]
+[ext_resource type="PackedScene" path="res://world/objects/save_point.tscn" id="11_qc5ri"]
+[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="12_cngne"]
 
-[node name="Room03" type="Node2D" unique_id=1937664956]
-script = ExtResource("1_ckuuj")
-room_name = "Santuario Alto"
+[node name="Room03" type="Node2D" unique_id=1987376805]
+script = ExtResource("1_j1hpd")
+room_name = "Azotea del Mercado"
 
-[node name="Fireflies" parent="." unique_id=686693523 instance=ExtResource("2_8gn8q")]
-position = Vector2(272, 136)
-emission_rect_extents = Vector2(272, 136)
+[node name="Decor" type="Node2D" parent="." unique_id=1907559846]
 
-[node name="Tiles" type="TileMapLayer" parent="." unique_id=443088483]
+[node name="NeonSign1" parent="Decor" unique_id=1872424301 instance=ExtResource("2_mhl1b")]
+position = Vector2(296, 40)
+sign_texture = ExtResource("3_c2liu")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+
+[node name="NeonSign2" parent="Decor" unique_id=1994243822 instance=ExtResource("2_mhl1b")]
+position = Vector2(88, 56)
+sign_texture = ExtResource("4_ltumg")
+glow_color = Color(0.15, 0.9, 0.8, 0.55)
+
+[node name="NeonSign3" parent="Decor" unique_id=1558807668 instance=ExtResource("2_mhl1b")]
+position = Vector2(456, 88)
+sign_texture = ExtResource("5_r7d1y")
+glow_color = Color(1, 0.6, 0.15, 0.55)
+
+[node name="NeonSign4" parent="Decor" unique_id=914141083 instance=ExtResource("2_mhl1b")]
+position = Vector2(184, 104)
+
+[node name="StreetLamp5" parent="Decor" unique_id=941551537 instance=ExtResource("6_7d42b")]
+position = Vector2(328, 240)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=52219257]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAATAAAAAAABAAAAAAAUAAAAAAABAAAAAAAVAAAAAAABAAAAAAAWAAAAAAABAAAAAAAXAAAAAAABAAAAAAAYAAAAAAABAAAAAAAZAAAAAAABAAAAAAAaAAAAAAABAAAAAAAbAAAAAAABAAAAAAAcAAAAAAABAAAAAAAdAAAAAAABAAAAAAAeAAAAAAABAAAAAAAfAAAAAAABAAAAAAAgAAAAAAABAAAAAAAhAAAAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAAgAAEAAAABAAAAAAAhAAEAAAABAAAAAAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAAgAAIAAAABAAAAAAAhAAIAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAAgAAMAAAABAAAAAAAhAAMAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAAgAAQAAAABAAAAAAAhAAQAAAABAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAAgAAUAAAABAAAAAAAhAAUAAAABAAAAAAAAAAYAAAABAAAAAAABAAYAAAABAAAAAAAgAAYAAAABAAAAAAAhAAYAAAABAAAAAAAAAAcAAAABAAAAAAABAAcAAAABAAAAAAAgAAcAAAABAAAAAAAhAAcAAAABAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAAgAAgAAAABAAAAAAAhAAgAAAABAAAAAAAAAAkAAAABAAAAAAABAAkAAAABAAAAAAAgAAkAAAABAAAAAAAhAAkAAAABAAAAAAAAAAoAAAABAAAAAAABAAoAAAABAAAAAAAgAAoAAAABAAAAAAAhAAoAAAABAAAAAAAAAAsAAAABAAAAAAABAAsAAAABAAAAAAAgAAsAAAABAAAAAAAhAAsAAAABAAAAAAAAAAwAAAABAAAAAAABAAwAAAABAAAAAAAAAA0AAAABAAAAAAABAA0AAAABAAAAAAAAAA4AAAABAAAAAAABAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAAAAAAAAAADAA8AAAAAAAAAAAAEAA8AAAAAAAAAAAAFAA8AAAAAAAAAAAAGAA8AAAAAAAAAAAAHAA8AAAAAAAAAAAAIAA8AAAAAAAAAAAAJAA8AAAAAAAAAAAAKAA8AAAAAAAAAAAALAA8AAAAAAAAAAAAMAA8AAAAAAAAAAAANAA8AAAAAAAAAAAAOAA8AAAAAAAAAAAAPAA8AAAAAAAAAAAAQAA8AAAAAAAAAAAARAA8AAAAAAAAAAAASAA8AAAAAAAAAAAATAA8AAAAAAAAAAAAUAA8AAAAAAAAAAAAVAA8AAAAAAAAAAAAWAA8AAAAAAAAAAAAXAA8AAAAAAAAAAAAYAA8AAAAAAAAAAAAZAA8AAAAAAAAAAAAaAA8AAAAAAAAAAAAbAA8AAAAAAAAAAAAcAA8AAAAAAAAAAAAdAA8AAAAAAAAAAAAeAA8AAAAAAAAAAAAfAA8AAAAAAAAAAAAgAA8AAAAAAAAAAAAhAA8AAAAAAAAAAAAAABAAAAABAAAAAAABABAAAAABAAAAAAACABAAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAHABAAAAABAAAAAAAIABAAAAABAAAAAAAJABAAAAABAAAAAAAKABAAAAABAAAAAAALABAAAAABAAAAAAAMABAAAAABAAAAAAANABAAAAABAAAAAAAOABAAAAABAAAAAAAPABAAAAABAAAAAAAQABAAAAABAAAAAAARABAAAAABAAAAAAASABAAAAABAAAAAAATABAAAAABAAAAAAAUABAAAAABAAAAAAAVABAAAAABAAAAAAAWABAAAAABAAAAAAAXABAAAAABAAAAAAAYABAAAAABAAAAAAAZABAAAAABAAAAAAAaABAAAAABAAAAAAAbABAAAAABAAAAAAAcABAAAAABAAAAAAAdABAAAAABAAAAAAAeABAAAAABAAAAAAAfABAAAAABAAAAAAAgABAAAAABAAAAAAAhABAAAAABAAAAAAA=")
-tile_set = ExtResource("3_cm8wi")
+tile_set = ExtResource("7_vtrdb")
 
-[node name="PlayerStart" type="Marker2D" parent="." unique_id=168998650]
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=2003747126]
 position = Vector2(456, 228)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1282559021]
+[node name="Doors" type="Node2D" parent="." unique_id=2057317455]
 
-[node name="Door_r03_der" parent="Doors" unique_id=1085107192 instance=ExtResource("4_biu46")]
+[node name="Door_r03_der" parent="Doors" unique_id=1687634383 instance=ExtResource("8_u01mb")]
 position = Vector2(536, 216)
 door_id = "r03_der"
 target_room_path = "res://world/rooms/room_01.tscn"
 target_door_id = "r01_izq"
 spawn_side = -1
 
-[node name="Objects" type="Node2D" parent="." unique_id=1687150289]
+[node name="Objects" type="Node2D" parent="." unique_id=334822976]
 
-[node name="AbilityPickup_Dash" parent="Objects" unique_id=1981694712 instance=ExtResource("5_j1hpd")]
+[node name="AbilityPickup_Dash" parent="Objects" unique_id=1243784648 instance=ExtResource("9_tuh35")]
 position = Vector2(88, 216)
 ability = "dash"
-pickup_id = "pickup_impetu"
+pickup_id = "pickup_impulso"
 
-[node name="Spikes1" parent="Objects" unique_id=997540042 instance=ExtResource("6_mhl1b")]
+[node name="Spikes1" parent="Objects" unique_id=1467694980 instance=ExtResource("10_mdnxf")]
 position = Vector2(232, 232)
 
-[node name="Spikes2" parent="Objects" unique_id=1532912205 instance=ExtResource("6_mhl1b")]
+[node name="Spikes2" parent="Objects" unique_id=1065037720 instance=ExtResource("10_mdnxf")]
 position = Vector2(248, 232)
 
-[node name="Spikes3" parent="Objects" unique_id=992292597 instance=ExtResource("6_mhl1b")]
+[node name="Spikes3" parent="Objects" unique_id=1365987496 instance=ExtResource("10_mdnxf")]
 position = Vector2(264, 232)
 
-[node name="Spikes4" parent="Objects" unique_id=1594451869 instance=ExtResource("6_mhl1b")]
+[node name="Spikes4" parent="Objects" unique_id=345632034 instance=ExtResource("10_mdnxf")]
 position = Vector2(280, 232)
 
-[node name="SavePoint" parent="Objects" unique_id=1564367735 instance=ExtResource("7_c2liu")]
+[node name="SavePoint" parent="Objects" unique_id=893881305 instance=ExtResource("11_qc5ri")]
 position = Vector2(392, 240)
-save_id = "santuario_alto"
+save_id = "terminal_sigma"
 
-[node name="Enemies" type="Node2D" parent="." unique_id=446726996]
+[node name="Enemies" type="Node2D" parent="." unique_id=1636121602]
 
-[node name="Crawler1" parent="Enemies" unique_id=1136360505 instance=ExtResource("8_ltumg")]
+[node name="Crawler1" parent="Enemies" unique_id=2054361934 instance=ExtResource("12_cngne")]
 position = Vector2(152, 235)

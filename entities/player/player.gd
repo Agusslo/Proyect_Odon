@@ -1,6 +1,6 @@
 class_name Player
 extends CharacterBody2D
-## El Caballero Libélula.
+## El Caballero Libélula: yelmo con cuernos, alas de libélula, capa, brazo robótico y katana.
 ##
 ## Este script SOLO mueve el cuerpo y coordina a sus componentes:
 ##   - HealthComponent   -> la vida
@@ -356,7 +356,10 @@ func _update_visuals() -> void:
 		_: animation = &"idle"
 
 	if sword.is_attacking and state != State.DASH and state != State.HURT:
-		animation = &"attack"
+		match sword.attack_direction:
+			Vector2.UP: animation = &"attack_up"
+			Vector2.DOWN: animation = &"attack_down"
+			_: animation = &"attack"
 
 	if sprite.animation != animation:
 		sprite.play(animation)

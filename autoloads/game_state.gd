@@ -5,7 +5,7 @@ extends Node
 ## aunque cambien las salas. Todo lo que tiene que "recordarse" va acá:
 ##   - habilidades desbloqueadas
 ##   - flags del mundo (objetos agarrados, jefes derrotados, puertas abiertas)
-##   - último punto de guardado (santuario)
+##   - último punto de guardado (terminal de recarga)
 ##
 ## Las escenas NUNCA guardan estado propio entre visitas: al volver a una sala,
 ## se instancia de nuevo y le pregunta a GameState qué debe mostrar.

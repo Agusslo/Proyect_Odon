@@ -21,11 +21,11 @@ const INFO := {
 		"hint": "Presioná Saltar en el aire para aletear otra vez.",
 	},
 	DASH: {
-		"name": "Ímpetu del Enjambre",
+		"name": "Impulso Sináptico",
 		"hint": "Presioná Dash (K / Shift) para lanzarte hacia adelante.",
 	},
 	GLIDE: {
-		"name": "Vuelo Sereno",
+		"name": "Planeo Nocturno",
 		"hint": "Mantené Saltar mientras caés para planear.",
 	},
 }

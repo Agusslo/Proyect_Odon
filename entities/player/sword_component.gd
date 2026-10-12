@@ -18,8 +18,8 @@ signal hit_landed(direction: Vector2)
 @onready var slash: Node2D = $SwordHitbox/Slash
 
 var is_attacking: bool = false
-
-var _direction: Vector2 = Vector2.RIGHT
+## Dirección del ataque actual (el jugador la usa para elegir la animación).
+var attack_direction: Vector2 = Vector2.RIGHT
 var _active_timer: float = 0.0
 var _cooldown_timer: float = 0.0
 
@@ -47,7 +47,7 @@ func attack(direction: Vector2) -> bool:
 	if not can_attack():
 		return false
 
-	_direction = direction
+	attack_direction = direction
 	is_attacking = true
 	_active_timer = active_time
 	_cooldown_timer = cooldown
@@ -71,4 +71,4 @@ func _end_attack() -> void:
 
 
 func _on_hitbox_hit_landed(_hurtbox: HurtboxComponent) -> void:
-	hit_landed.emit(_direction)
+	hit_landed.emit(attack_direction)

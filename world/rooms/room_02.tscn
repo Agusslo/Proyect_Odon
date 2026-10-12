@@ -1,60 +1,105 @@
 [gd_scene format=4]
 
-[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_2e3fk"]
-[ext_resource type="PackedScene" path="res://world/objects/fireflies.tscn" id="2_chdpv"]
-[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="3_dyro7"]
-[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="4_wk7li"]
-[ext_resource type="PackedScene" path="res://world/objects/ability_pickup.tscn" id="5_mdi48"]
-[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="6_mtdvj"]
-[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="7_8epxt"]
+[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_p3n67"]
+[ext_resource type="PackedScene" path="res://world/objects/neon_sign.tscn" id="2_ce8q6"]
+[ext_resource type="Texture2D" path="res://assets/props/lanterns.png" id="3_ou2nl"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_teal.png" id="4_q0ce7"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_wide.png" id="5_135wp"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_white.png" id="6_efocp"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_orange.png" id="7_ex8u2"]
+[ext_resource type="PackedScene" path="res://world/objects/street_lamp.tscn" id="8_44eum"]
+[ext_resource type="Texture2D" path="res://assets/props/stall.png" id="9_8imbn"]
+[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="10_rw3de"]
+[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="11_ntt10"]
+[ext_resource type="PackedScene" path="res://world/objects/ability_pickup.tscn" id="12_xj3l1"]
+[ext_resource type="PackedScene" path="res://world/objects/spikes.tscn" id="13_475f2"]
+[ext_resource type="PackedScene" path="res://entities/enemies/crawler/crawler.tscn" id="14_40ibf"]
 
-[node name="Room02" type="Node2D" unique_id=578546510]
-script = ExtResource("1_2e3fk")
-room_name = "Galería Musgosa"
+[node name="Room02" type="Node2D" unique_id=188231268]
+script = ExtResource("1_p3n67")
+room_name = "Mercado de Neón"
 
-[node name="Fireflies" parent="." unique_id=1983617532 instance=ExtResource("2_chdpv")]
-position = Vector2(480, 136)
-amount = 43
-emission_rect_extents = Vector2(480, 136)
+[node name="Decor" type="Node2D" parent="." unique_id=1913328828]
 
-[node name="Tiles" type="TileMapLayer" parent="." unique_id=1733293626]
+[node name="NeonSign1" parent="Decor" unique_id=749052260 instance=ExtResource("2_ce8q6")]
+position = Vector2(296, 40)
+sign_texture = ExtResource("3_ou2nl")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+
+[node name="NeonSign2" parent="Decor" unique_id=1693439223 instance=ExtResource("2_ce8q6")]
+position = Vector2(760, 40)
+sign_texture = ExtResource("3_ou2nl")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+
+[node name="NeonSign3" parent="Decor" unique_id=873948060 instance=ExtResource("2_ce8q6")]
+position = Vector2(648, 56)
+sign_texture = ExtResource("4_q0ce7")
+glow_color = Color(0.15, 0.9, 0.8, 0.55)
+
+[node name="NeonSign4" parent="Decor" unique_id=1838787785 instance=ExtResource("2_ce8q6")]
+position = Vector2(504, 72)
+sign_texture = ExtResource("5_135wp")
+glow_color = Color(1, 0.25, 0.28, 0.5)
+
+[node name="NeonSign5" parent="Decor" unique_id=1687191291 instance=ExtResource("2_ce8q6")]
+position = Vector2(392, 88)
+sign_texture = ExtResource("6_efocp")
+glow_color = Color(1, 0.92, 0.88, 0.45)
+
+[node name="NeonSign6" parent="Decor" unique_id=976380300 instance=ExtResource("2_ce8q6")]
+position = Vector2(200, 120)
+sign_texture = ExtResource("7_ex8u2")
+glow_color = Color(1, 0.6, 0.15, 0.55)
+
+[node name="StreetLamp7" parent="Decor" unique_id=1268316732 instance=ExtResource("8_44eum")]
+position = Vector2(136, 240)
+
+[node name="FoodStall8" parent="Decor" unique_id=666734558 instance=ExtResource("2_ce8q6")]
+position = Vector2(264, 212)
+sign_texture = ExtResource("9_8imbn")
+glow_color = Color(1, 0.6, 0.25, 0.35)
+
+[node name="StreetLamp9" parent="Decor" unique_id=824711154 instance=ExtResource("8_44eum")]
+position = Vector2(616, 240)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=973264887]
 tile_map_data = PackedByteArray("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")
-tile_set = ExtResource("3_dyro7")
+tile_set = ExtResource("10_rw3de")
 
-[node name="PlayerStart" type="Marker2D" parent="." unique_id=1811199592]
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=323886128]
 position = Vector2(72, 228)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1275957045]
+[node name="Doors" type="Node2D" parent="." unique_id=416418821]
 
-[node name="Door_r02_izq" parent="Doors" unique_id=175437211 instance=ExtResource("4_wk7li")]
+[node name="Door_r02_izq" parent="Doors" unique_id=737738228 instance=ExtResource("11_ntt10")]
 position = Vector2(8, 216)
 door_id = "r02_izq"
 target_room_path = "res://world/rooms/room_01.tscn"
 target_door_id = "r01_der"
 
-[node name="Objects" type="Node2D" parent="." unique_id=873123577]
+[node name="Objects" type="Node2D" parent="." unique_id=816425586]
 
-[node name="AbilityPickup_DoubleJump" parent="Objects" unique_id=1064038682 instance=ExtResource("5_mdi48")]
+[node name="AbilityPickup_DoubleJump" parent="Objects" unique_id=301812629 instance=ExtResource("12_xj3l1")]
 position = Vector2(904, 88)
 pickup_id = "pickup_alas"
 
-[node name="Spikes1" parent="Objects" unique_id=855235428 instance=ExtResource("6_mtdvj")]
+[node name="Spikes1" parent="Objects" unique_id=465349976 instance=ExtResource("13_475f2")]
 position = Vector2(504, 232)
 
-[node name="Spikes2" parent="Objects" unique_id=1063345216 instance=ExtResource("6_mtdvj")]
+[node name="Spikes2" parent="Objects" unique_id=1387885049 instance=ExtResource("13_475f2")]
 position = Vector2(520, 232)
 
-[node name="Spikes3" parent="Objects" unique_id=1909468453 instance=ExtResource("6_mtdvj")]
+[node name="Spikes3" parent="Objects" unique_id=1459784288 instance=ExtResource("13_475f2")]
 position = Vector2(536, 232)
 
-[node name="Spikes4" parent="Objects" unique_id=1889964666 instance=ExtResource("6_mtdvj")]
+[node name="Spikes4" parent="Objects" unique_id=381886578 instance=ExtResource("13_475f2")]
 position = Vector2(552, 232)
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1035694977]
+[node name="Enemies" type="Node2D" parent="." unique_id=1483933939]
 
-[node name="Crawler1" parent="Enemies" unique_id=934329995 instance=ExtResource("7_8epxt")]
+[node name="Crawler1" parent="Enemies" unique_id=1295853727 instance=ExtResource("14_40ibf")]
 position = Vector2(200, 235)
 
-[node name="Crawler2" parent="Enemies" unique_id=896877600 instance=ExtResource("7_8epxt")]
+[node name="Crawler2" parent="Enemies" unique_id=1584035202 instance=ExtResource("14_40ibf")]
 position = Vector2(680, 235)
 start_direction = 1

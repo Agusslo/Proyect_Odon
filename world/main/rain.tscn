@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/props/raindrop.png" id="1_drop"]
+
+[node name="Rain" type="CanvasLayer"]
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+modulate = Color(0.8, 0.85, 1, 0.4)
+position = Vector2(260, -12)
+amount = 120
+lifetime = 0.9
+preprocess = 1.0
+texture = ExtResource("1_drop")
+emission_shape = 3
+emission_rect_extents = Vector2(340, 1)
+particle_flag_align_y = true
+direction = Vector2(-0.22, 1)
+spread = 2.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 360.0
+initial_velocity_max = 440.0

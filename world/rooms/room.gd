@@ -4,10 +4,11 @@ extends Node2D
 ##
 ## Estructura que espera encontrar (ver README):
 ##   Room (Node2D, este script)
+##   ├── Decor (Node2D)         -> carteles y faroles (detrás de todo)
 ##   ├── Tiles (TileMapLayer)   -> define también los límites de la cámara
 ##   ├── PlayerStart (Marker2D) -> spawn por defecto (partida nueva)
 ##   ├── Doors (Node2D)         -> instancias de door.tscn
-##   ├── Objects (Node2D)       -> santuarios, pickups, pinches...
+##   ├── Objects (Node2D)       -> terminales, pickups, pinches...
 ##   └── Enemies (Node2D)
 
 @export var room_name: String = "Sala sin nombre"
@@ -16,7 +17,7 @@ extends Node2D
 @onready var player_start: Marker2D = $PlayerStart
 
 
-## Devuelve dónde aparecer según el id de una puerta o santuario.
+## Devuelve dónde aparecer según el id de una puerta o terminal.
 ## Si no lo encuentra (o viene vacío), usa PlayerStart.
 func get_spawn_position(spawn_id: String) -> Vector2:
 	if spawn_id != "":

@@ -43,7 +43,7 @@ func heal(amount: int) -> void:
 	health_changed.emit(current_health, max_health)
 
 
-## Restablece la vida al máximo (santuarios, respawn).
+## Restablece la vida al máximo (terminales, respawn).
 func reset_health() -> void:
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
