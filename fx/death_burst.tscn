@@ -1,0 +1,61 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://fx/one_shot_fx.gd" id="1_fx"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/fx/scrap_0.png" id="3_scrap"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_burst"]
+colors = PackedColorArray(1, 0.9, 0.7, 1, 1, 0.35, 0.15, 0)
+
+[sub_resource type="Gradient" id="Gradient_scrap"]
+offsets = PackedFloat32Array(0, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="DeathBurst" type="Node2D" node_paths=PackedStringArray("flash_sprite")]
+z_index = 30
+script = ExtResource("1_fx")
+lifetime = 1.0
+flash_sprite = NodePath("Flash")
+
+[node name="Flash" type="Sprite2D" parent="."]
+modulate = Color(1, 0.8, 0.5, 1)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_glow")
+
+[node name="Embers" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 24
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("2_glow")
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 60.0
+initial_velocity_max = 190.0
+scale_amount_min = 0.015
+scale_amount_max = 0.04
+color_ramp = SubResource("Gradient_burst")
+
+[node name="Scrap" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 0.9
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("3_scrap")
+direction = Vector2(0, -1)
+spread = 70.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 90.0
+initial_velocity_max = 170.0
+angular_velocity_min = -400.0
+angular_velocity_max = 400.0
+scale_amount_min = 0.06
+scale_amount_max = 0.1
+color_ramp = SubResource("Gradient_scrap")

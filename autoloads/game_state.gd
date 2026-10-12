@@ -11,12 +11,18 @@ extends Node
 ## se instancia de nuevo y le pregunta a GameState qué debe mostrar.
 
 signal ability_unlocked(ability: StringName)
+signal max_health_changed(new_max: int)
 
 const SAVE_PATH := "user://savegame.json"
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
+const BASE_MAX_HEALTH := 5
 
 var unlocked_abilities: Dictionary = {}  # StringName -> true
 var world_flags: Dictionary = {}         # String -> bool  (ej: "pickup_alas": true)
+## Celdas de vida extra conseguidas con Fragmentos de Núcleo.
+var max_health_bonus: int = 0
+## Salas ya visitadas (para mostrar el cartel de zona solo la primera vez).
+var visited_rooms: Dictionary = {}
 
 ## Sala cargada ahora mismo (la setea Main).
 var current_room_path: String = ""
@@ -49,6 +55,25 @@ func get_flag(key: String) -> bool:
 	return world_flags.get(key, false)
 
 
+# --- Vida máxima -------------------------------------------------------------
+
+func get_max_health() -> int:
+	return BASE_MAX_HEALTH + max_health_bonus
+
+
+func add_max_health(amount: int = 1) -> void:
+	max_health_bonus += amount
+	max_health_changed.emit(get_max_health())
+
+
+## Marca una sala como visitada. Devuelve true si es la primera vez.
+func visit_room(room_path: String) -> bool:
+	if visited_rooms.has(room_path):
+		return false
+	visited_rooms[room_path] = true
+	return true
+
+
 # --- Punto de reaparición ----------------------------------------------------
 
 func set_respawn_point(room_path: String, spawn_id: String) -> void:
@@ -69,6 +94,8 @@ func save_game() -> bool:
 		"version": SAVE_VERSION,
 		"abilities": abilities,
 		"flags": world_flags,
+		"max_health_bonus": max_health_bonus,
+		"visited": visited_rooms.keys(),
 		"respawn_room": respawn_room_path,
 		"respawn_spawn": respawn_spawn_id,
 	}
@@ -95,6 +122,9 @@ func load_game() -> bool:
 	world_flags = (data.get("flags", {}) as Dictionary).duplicate()
 	respawn_room_path = data.get("respawn_room", "")
 	respawn_spawn_id = data.get("respawn_spawn", "")
+	max_health_bonus = int(data.get("max_health_bonus", 0))
+	for room in data.get("visited", []):
+		visited_rooms[room] = true
 	return true
 
 
@@ -111,5 +141,7 @@ func delete_save() -> void:
 func reset() -> void:
 	unlocked_abilities.clear()
 	world_flags.clear()
+	visited_rooms.clear()
+	max_health_bonus = 0
 	respawn_room_path = ""
 	respawn_spawn_id = ""

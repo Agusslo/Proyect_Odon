@@ -13,6 +13,7 @@ extends Node2D
 @onready var room_container: Node2D = $RoomContainer
 @onready var player: Player = $Player
 @onready var fade: ColorRect = $TransitionLayer/Fade
+@onready var fx_layer: Node2D = $FX
 
 var _current_room: Room
 var _is_transitioning: bool = false
@@ -72,7 +73,16 @@ func _load_room(room_path: String, spawn_id: String) -> void:
 
 	player.teleport_to(_current_room.get_spawn_position(spawn_id))
 	_apply_camera_limits(_current_room.get_bounds())
-	EventBus.room_entered.emit(_current_room.room_name)
+	_clear_fx()
+	EventBus.boss_ended.emit(false)  # por si se salió de una pelea (muerte)
+	if GameState.visit_room(room_path):
+		EventBus.room_entered.emit(_current_room.room_name)
+
+
+## Borra efectos sueltos (chispas, ondas) de la sala anterior.
+func _clear_fx() -> void:
+	for fx in fx_layer.get_children():
+		fx.queue_free()
 
 
 func _apply_camera_limits(bounds: Rect2) -> void:

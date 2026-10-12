@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://fx/one_shot_fx.gd" id="1_fx"]
+[ext_resource type="Texture2D" path="res://assets/fx/dust.png" id="2_dust"]
+
+[sub_resource type="Gradient" id="Gradient_dust"]
+colors = PackedColorArray(0.75, 0.78, 0.82, 0.55, 0.75, 0.78, 0.82, 0)
+
+[node name="DustPuff" type="Node2D"]
+z_index = 25
+script = ExtResource("1_fx")
+lifetime = 0.6
+
+[node name="Dust" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 8
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("2_dust")
+emission_shape = 3
+emission_rect_extents = Vector2(6, 1)
+direction = Vector2(0, -1)
+spread = 80.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 15.0
+initial_velocity_max = 40.0
+scale_amount_min = 0.12
+scale_amount_max = 0.2
+color_ramp = SubResource("Gradient_dust")

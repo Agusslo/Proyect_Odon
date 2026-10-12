@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/bosses/recolectora/falling_scrap.gd" id="1_scrap"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/fx/scrap_1.png" id="3_scrap"]
+[ext_resource type="Texture2D" path="res://assets/fx/dust.png" id="4_dust"]
+[ext_resource type="Script" path="res://components/hitbox_component.gd" id="5_hitbox"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
+radius = 6.0
+
+[sub_resource type="Gradient" id="Gradient_dust"]
+colors = PackedColorArray(0.7, 0.68, 0.65, 0.6, 0.7, 0.68, 0.65, 0)
+
+[node name="FallingScrap" type="Node2D"]
+z_index = 22
+script = ExtResource("1_scrap")
+
+[node name="Marker" type="Sprite2D" parent="."]
+modulate = Color(1, 0.3, 0.2, 0.3)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.09, 0.025)
+texture = ExtResource("2_glow")
+
+[node name="Piece" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Piece"]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("3_scrap")
+
+[node name="Dust" type="CPUParticles2D" parent="Piece"]
+emitting = false
+amount = 10
+lifetime = 0.8
+texture = ExtResource("4_dust")
+emission_shape = 3
+emission_rect_extents = Vector2(6, 1)
+gravity = Vector2(0, 160)
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+color_ramp = SubResource("Gradient_dust")
+
+[node name="HitboxComponent" type="Area2D" parent="Piece"]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("5_hitbox")
+knockback_force = 160.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Piece/HitboxComponent"]
+shape = SubResource("CircleShape2D_hit")

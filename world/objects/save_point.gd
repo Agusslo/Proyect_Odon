@@ -1,6 +1,6 @@
 class_name SavePoint
 extends Area2D
-## Terminal de recarga: el jugador se para enfrente, presiona Interactuar (E) y
+## Nido de recarga: el jugador se para enfrente, presiona Interactuar (E) y
 ## recupera toda la vida + guarda la partida + queda como punto de reaparición.
 
 @export var save_id: String = ""
@@ -35,7 +35,7 @@ func _rest() -> void:
 	_player.health.reset_health()
 	GameState.set_respawn_point(GameState.current_room_path, save_id)
 	if GameState.save_game():
-		EventBus.message_requested.emit("Sistema restaurado. Partida guardada.", 2.0)
+		EventBus.message_requested.emit("Descansaste en el nido. Partida guardada.", 2.0)
 
 
 func _on_body_entered(body: Node2D) -> void:

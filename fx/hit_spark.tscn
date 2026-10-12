@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://fx/one_shot_fx.gd" id="1_fx"]
+[ext_resource type="Texture2D" path="res://assets/fx/spark.png" id="2_spark"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="3_glow"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_spark"]
+colors = PackedColorArray(1, 0.95, 0.8, 1, 1, 0.55, 0.2, 0)
+
+[node name="HitSpark" type="Node2D" node_paths=PackedStringArray("flash_sprite")]
+z_index = 30
+script = ExtResource("1_fx")
+lifetime = 0.5
+flash_sprite = NodePath("Flash")
+
+[node name="Flash" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_spark")
+
+[node name="Sparks" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 12
+lifetime = 0.35
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("3_glow")
+spread = 180.0
+gravity = Vector2(0, 260)
+initial_velocity_min = 70.0
+initial_velocity_max = 160.0
+scale_amount_min = 0.015
+scale_amount_max = 0.035
+color_ramp = SubResource("Gradient_spark")

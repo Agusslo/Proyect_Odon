@@ -1,0 +1,121 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://world/rooms/room.gd" id="1_wihsr"]
+[ext_resource type="PackedScene" path="res://world/objects/neon_sign.tscn" id="2_ni7ad"]
+[ext_resource type="Texture2D" path="res://assets/props/lanterns.png" id="3_lmh1q"]
+[ext_resource type="Texture2D" path="res://assets/props/sign_orange.png" id="4_t44bc"]
+[ext_resource type="Texture2D" path="res://assets/props/pipes.png" id="5_podjy"]
+[ext_resource type="PackedScene" path="res://world/objects/steam_vent.tscn" id="6_aq77o"]
+[ext_resource type="Texture2D" path="res://assets/props/crate.png" id="7_yjbc7"]
+[ext_resource type="Texture2D" path="res://assets/props/barrel.png" id="8_6idpp"]
+[ext_resource type="PackedScene" path="res://world/objects/street_lamp.tscn" id="9_fn31m"]
+[ext_resource type="PackedScene" path="res://world/objects/atmosphere.tscn" id="10_vo67h"]
+[ext_resource type="TileSet" path="res://assets/tiles/tileset.tres" id="11_jfu7c"]
+[ext_resource type="PackedScene" path="res://world/objects/door.tscn" id="12_i35m6"]
+[ext_resource type="PackedScene" path="res://world/objects/health_core.tscn" id="13_i4bjr"]
+[ext_resource type="PackedScene" path="res://entities/enemies/tick/tick_turret.tscn" id="14_tgtvk"]
+[ext_resource type="PackedScene" path="res://entities/enemies/beetle/beetle.tscn" id="15_71lt6"]
+
+[node name="Room08" type="Node2D" unique_id=1147253790]
+script = ExtResource("1_wihsr")
+room_name = "Ductos Bajos"
+
+[node name="Decor" type="Node2D" parent="." unique_id=1592209338]
+
+[node name="Lanterns1" parent="Decor" unique_id=1984961658 instance=ExtResource("2_ni7ad")]
+position = Vector2(328, 40)
+sign_texture = ExtResource("3_lmh1q")
+glow_color = Color(1, 0.3, 0.25, 0.4)
+flicker = false
+
+[node name="SignRed1" parent="Decor" unique_id=2044686646 instance=ExtResource("2_ni7ad")]
+position = Vector2(216, 56)
+
+[node name="SignOrange1" parent="Decor" unique_id=1163038430 instance=ExtResource("2_ni7ad")]
+position = Vector2(392, 72)
+sign_texture = ExtResource("4_t44bc")
+glow_color = Color(1, 0.6, 0.15, 0.55)
+
+[node name="Pipes1" parent="Decor" unique_id=1510318007 instance=ExtResource("2_ni7ad")]
+position = Vector2(616, 88)
+sign_texture = ExtResource("5_podjy")
+glow_color = Color(0, 0, 0, 0)
+flicker = false
+
+[node name="Pipes2" parent="Decor" unique_id=683626733 instance=ExtResource("2_ni7ad")]
+position = Vector2(72, 152)
+sign_texture = ExtResource("5_podjy")
+glow_color = Color(0, 0, 0, 0)
+flicker = false
+
+[node name="Pipes3" parent="Decor" unique_id=550960963 instance=ExtResource("2_ni7ad")]
+position = Vector2(488, 152)
+sign_texture = ExtResource("5_podjy")
+glow_color = Color(0, 0, 0, 0)
+flicker = false
+
+[node name="SteamVent1" parent="Decor" unique_id=693901120 instance=ExtResource("6_aq77o")]
+position = Vector2(264, 240)
+
+[node name="Crate1" parent="Decor" unique_id=1062370241 instance=ExtResource("2_ni7ad")]
+position = Vector2(360, 232)
+sign_texture = ExtResource("7_yjbc7")
+glow_color = Color(0, 0, 0, 0)
+flicker = false
+
+[node name="Barrel1" parent="Decor" unique_id=1565824114 instance=ExtResource("2_ni7ad")]
+position = Vector2(376, 232)
+sign_texture = ExtResource("8_6idpp")
+glow_color = Color(0, 0, 0, 0)
+flicker = false
+
+[node name="SteamVent2" parent="Decor" unique_id=2136300612 instance=ExtResource("6_aq77o")]
+position = Vector2(456, 240)
+
+[node name="StreetLamp1" parent="Decor" unique_id=1046754098 instance=ExtResource("9_fn31m")]
+position = Vector2(504, 240)
+
+[node name="Atmosphere" parent="." unique_id=52853219 instance=ExtResource("10_vo67h")]
+room_size = Vector2(704, 272)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1995411098]
+texture_filter = 4
+scale = Vector2(0.25, 0.25)
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAQAAAABAAAAAAADAAMAAAACAAAAAAADAAIAAAADAAAAAAADAAIAAAAEAAAAAAADAAIAAAAFAAAAAAADAAIAAAAGAAAAAAADAAIAAAAHAAAAAAADAAIAAAAIAAAAAAADAAIAAAAJAAAAAAADAAIAAAAKAAAAAAADAAIAAAALAAAAAAADAAIAAAAMAAAAAAADAAIAAAANAAAAAAADAAIAAAAOAAAAAAADAAIAAAAPAAAAAAADAAIAAAAQAAAAAAADAAIAAAARAAAAAAADAAIAAAASAAAAAAADAAIAAAATAAAAAAADAAIAAAAUAAAAAAADAAIAAAAVAAAAAAADAAIAAAAWAAAAAAADAAIAAAAXAAAAAAADAAIAAAAYAAAAAAADAAIAAAAZAAAAAAADAAIAAAAaAAAAAAADAAIAAAAbAAAAAAADAAIAAAAcAAAAAAADAAIAAAAdAAAAAAADAAIAAAAeAAAAAAADAAIAAAAfAAAAAAADAAIAAAAgAAAAAAADAAIAAAAhAAAAAAADAAIAAAAiAAAAAAADAAIAAAAjAAAAAAADAAIAAAAkAAAAAAADAAIAAAAlAAAAAAADAAIAAAAmAAAAAAADAAIAAAAnAAAAAAADAAIAAAAoAAAAAAADAAIAAAApAAAAAAADAAIAAAAqAAAAAAABAAQAAAArAAAAAAADAAMAAAAAAAEAAAADAAMAAAABAAEAAAABAAMAAAAqAAEAAAADAAEAAAArAAEAAAADAAMAAAAAAAIAAAADAAMAAAABAAIAAAABAAMAAAAqAAIAAAADAAEAAAArAAIAAAADAAMAAAAAAAMAAAABAAQAAAABAAMAAAABAAMAAAAqAAMAAAADAAEAAAArAAMAAAADAAMAAAAAAAQAAAABAAQAAAABAAQAAAABAAMAAAAqAAQAAAADAAEAAAArAAQAAAADAAMAAAAAAAUAAAADAAMAAAABAAUAAAABAAMAAAAqAAUAAAADAAEAAAArAAUAAAADAAMAAAAAAAYAAAADAAMAAAABAAYAAAABAAMAAAAGAAYAAAAAAAQAAAAHAAYAAAAAAAQAAAAIAAYAAAAAAAQAAAAJAAYAAAAAAAQAAAAKAAYAAAAAAAQAAAAqAAYAAAADAAAAAAArAAYAAAADAAIAAAAAAAcAAAADAAMAAAABAAcAAAABAAMAAAAAAAgAAAADAAMAAAABAAgAAAABAAMAAAAAAAkAAAADAAMAAAABAAkAAAABAAMAAAAAAAoAAAADAAMAAAABAAoAAAABAAMAAAAOAAoAAAAAAAQAAAAPAAoAAAAAAAQAAAAQAAoAAAAAAAQAAAARAAoAAAAAAAQAAAASAAoAAAAAAAQAAAATAAoAAAAAAAQAAAAUAAoAAAAAAAQAAAAiAAoAAAACAAEAAAAjAAoAAAACAAMAAAAkAAoAAAACAAMAAAAlAAoAAAACAAMAAAAmAAoAAAACAAMAAAAnAAoAAAACAAMAAAAoAAoAAAACAAMAAAApAAoAAAACAAMAAAAqAAoAAAACAAMAAAArAAoAAAACAAMAAAAAAAsAAAADAAIAAAABAAsAAAABAAIAAAAiAAsAAAADAAEAAAAjAAsAAAADAAMAAAAkAAsAAAABAAQAAAAlAAsAAAADAAMAAAAmAAsAAAADAAMAAAAnAAsAAAADAAMAAAAoAAsAAAADAAMAAAApAAsAAAADAAMAAAAqAAsAAAADAAMAAAArAAsAAAADAAMAAAAiAAwAAAADAAEAAAAjAAwAAAACAAQAAAAkAAwAAAADAAMAAAAlAAwAAAADAAMAAAAmAAwAAAADAAMAAAAnAAwAAAADAAMAAAAoAAwAAAADAAMAAAApAAwAAAADAAMAAAAqAAwAAAADAAMAAAArAAwAAAADAAMAAAAiAA0AAAADAAEAAAAjAA0AAAADAAMAAAAkAA0AAAADAAMAAAAlAA0AAAADAAMAAAAmAA0AAAADAAMAAAAnAA0AAAADAAMAAAAoAA0AAAADAAMAAAApAA0AAAADAAMAAAAqAA0AAAADAAMAAAArAA0AAAADAAMAAAAiAA4AAAADAAEAAAAjAA4AAAADAAMAAAAkAA4AAAACAAQAAAAlAA4AAAACAAQAAAAmAA4AAAADAAMAAAAnAA4AAAADAAMAAAAoAA4AAAABAAQAAAApAA4AAAADAAMAAAAqAA4AAAADAAMAAAArAA4AAAADAAMAAAAAAA8AAAACAAMAAAABAA8AAAACAAMAAAACAA8AAAACAAMAAAADAA8AAAACAAMAAAAEAA8AAAACAAMAAAAFAA8AAAACAAMAAAAGAA8AAAACAAMAAAAHAA8AAAACAAMAAAAIAA8AAAACAAMAAAAJAA8AAAACAAMAAAAKAA8AAAACAAMAAAALAA8AAAACAAMAAAAMAA8AAAACAAMAAAANAA8AAAACAAMAAAAOAA8AAAACAAMAAAAPAA8AAAACAAMAAAAQAA8AAAACAAMAAAARAA8AAAACAAMAAAASAA8AAAACAAMAAAATAA8AAAACAAMAAAAUAA8AAAACAAMAAAAVAA8AAAACAAMAAAAWAA8AAAACAAMAAAAXAA8AAAACAAMAAAAYAA8AAAACAAMAAAAZAA8AAAACAAMAAAAaAA8AAAACAAMAAAAbAA8AAAACAAMAAAAcAA8AAAACAAMAAAAdAA8AAAACAAMAAAAeAA8AAAACAAMAAAAfAA8AAAACAAMAAAAgAA8AAAACAAMAAAAhAA8AAAACAAMAAAAiAA8AAAADAAMAAAAjAA8AAAADAAMAAAAkAA8AAAACAAQAAAAlAA8AAAADAAMAAAAmAA8AAAABAAQAAAAnAA8AAAADAAMAAAAoAA8AAAABAAQAAAApAA8AAAADAAMAAAAqAA8AAAADAAMAAAArAA8AAAADAAMAAAAAABAAAAADAAMAAAABABAAAAADAAMAAAACABAAAAADAAMAAAADABAAAAADAAMAAAAEABAAAAADAAMAAAAFABAAAAADAAMAAAAGABAAAAADAAMAAAAHABAAAAADAAMAAAAIABAAAAADAAMAAAAJABAAAAADAAMAAAAKABAAAAADAAMAAAALABAAAAADAAMAAAAMABAAAAACAAQAAAANABAAAAADAAMAAAAOABAAAAACAAQAAAAPABAAAAADAAMAAAAQABAAAAADAAMAAAARABAAAAABAAQAAAASABAAAAADAAMAAAATABAAAAADAAMAAAAUABAAAAADAAMAAAAVABAAAAADAAMAAAAWABAAAAADAAMAAAAXABAAAAADAAMAAAAYABAAAAADAAMAAAAZABAAAAADAAMAAAAaABAAAAADAAMAAAAbABAAAAADAAMAAAAcABAAAAADAAMAAAAdABAAAAADAAMAAAAeABAAAAADAAMAAAAfABAAAAADAAMAAAAgABAAAAADAAMAAAAhABAAAAACAAQAAAAiABAAAAABAAQAAAAjABAAAAABAAQAAAAkABAAAAADAAMAAAAlABAAAAADAAMAAAAmABAAAAADAAMAAAAnABAAAAABAAQAAAAoABAAAAADAAMAAAApABAAAAADAAMAAAAqABAAAAADAAMAAAArABAAAAADAAMAAAA=")
+tile_set = ExtResource("11_jfu7c")
+
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=445302326]
+position = Vector2(40, 228)
+
+[node name="Doors" type="Node2D" parent="." unique_id=900534636]
+
+[node name="Door_r08_izq" parent="Doors" unique_id=2008066158 instance=ExtResource("12_i35m6")]
+position = Vector2(8, 216)
+door_id = "r08_izq"
+target_room_path = "res://world/rooms/room_07.tscn"
+target_door_id = "r07_der"
+
+[node name="Door_r08_der" parent="Doors" unique_id=362358309 instance=ExtResource("12_i35m6")]
+position = Vector2(696, 136)
+door_id = "r08_der"
+target_room_path = "res://world/rooms/room_01.tscn"
+target_door_id = "r01_izq"
+spawn_offset = Vector2(-32, 12)
+
+[node name="Objects" type="Node2D" parent="." unique_id=961726467]
+
+[node name="HealthCore_NucleoDuctos" parent="Objects" unique_id=1445484011 instance=ExtResource("13_i4bjr")]
+position = Vector2(136, 88)
+pickup_id = "nucleo_ductos"
+
+[node name="Enemies" type="Node2D" parent="." unique_id=133864125]
+
+[node name="TickTurret1" parent="Enemies" unique_id=129016912 instance=ExtResource("14_tgtvk")]
+position = Vector2(296, 154)
+
+[node name="Beetle1" parent="Enemies" unique_id=2104049992 instance=ExtResource("15_71lt6")]
+position = Vector2(200, 235)
+
+[node name="Beetle2" parent="Enemies" unique_id=1151860937 instance=ExtResource("15_71lt6")]
+position = Vector2(424, 235)
+start_direction = 1

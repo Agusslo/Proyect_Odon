@@ -1,37 +1,45 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_player"]
-[ext_resource type="SpriteFrames" path="res://entities/player/knight_frames.tres" id="2_frames"]
+[ext_resource type="PackedScene" path="res://entities/player/knight_rig.tscn" id="2_rig"]
 [ext_resource type="Script" path="res://components/health_component.gd" id="3_health"]
 [ext_resource type="Script" path="res://components/hurtbox_component.gd" id="4_hurtbox"]
 [ext_resource type="Script" path="res://entities/player/sword_component.gd" id="5_sword"]
 [ext_resource type="Script" path="res://components/hitbox_component.gd" id="6_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/fx/slash.png" id="7_slash"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="8_glow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(10, 24)
+size = Vector2(10, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
-size = Vector2(8, 20)
+size = Vector2(8, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sword"]
-size = Vector2(26, 20)
+size = Vector2(26, 22)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_heal"]
+colors = PackedColorArray(1, 0.75, 0.35, 0, 1, 0.7, 0.3, 1)
+
+[sub_resource type="Gradient" id="Gradient_trail"]
+colors = PackedColorArray(0.7, 0.85, 1, 0.6, 0.4, 0.6, 1, 0)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_player")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -14)
-sprite_frames = ExtResource("2_frames")
-animation = &"idle"
-autoplay = "idle"
+[node name="KnightRig" parent="." instance=ExtResource("2_rig")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
-position_smoothing_speed = 8.0
+position_smoothing_speed = 7.0
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_health")
@@ -44,10 +52,11 @@ health_component = NodePath("../HealthComponent")
 invincibility_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_hurt")
 
 [node name="Sword" type="Node2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(0, -4)
 script = ExtResource("5_sword")
 
 [node name="SwordHitbox" type="Area2D" parent="Sword"]
@@ -55,12 +64,48 @@ position = Vector2(18, 0)
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("6_hitbox")
-knockback_force = 120.0
+knockback_force = 140.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordHitbox"]
 shape = SubResource("RectangleShape2D_sword")
 disabled = true
 
-[node name="Slash" type="Polygon2D" parent="Sword/SwordHitbox"]
-color = Color(1, 0.35, 0.3, 0.7)
-polygon = PackedVector2Array(-8, -11, 3, -10, 10, -6, 13, 0, 10, 6, 3, 10, -8, 11, 3, 6, 6, 0, 3, -6)
+[node name="Slash" type="Sprite2D" parent="Sword/SwordHitbox"]
+z_index = 30
+texture_filter = 4
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("7_slash")
+offset = Vector2(-70, 0)
+
+[node name="HealParticles" type="CPUParticles2D" parent="."]
+z_index = 30
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(4, -6)
+emitting = false
+amount = 18
+lifetime = 0.55
+texture = ExtResource("8_glow")
+emission_shape = 1
+emission_sphere_radius = 22.0
+gravity = Vector2(0, 0)
+radial_accel_min = -140.0
+radial_accel_max = -100.0
+scale_amount_min = 0.015
+scale_amount_max = 0.03
+color_ramp = SubResource("Gradient_heal")
+
+[node name="DashTrail" type="CPUParticles2D" parent="."]
+z_index = 15
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(0, -4)
+emitting = false
+amount = 40
+lifetime = 0.25
+local_coords = false
+texture = ExtResource("8_glow")
+emission_shape = 3
+emission_rect_extents = Vector2(4, 12)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.04
+scale_amount_max = 0.07
+color_ramp = SubResource("Gradient_trail")

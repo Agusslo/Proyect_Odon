@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" path="res://ui/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" path="res://world/main/city_background.tscn" id="4_bg"]
 [ext_resource type="PackedScene" path="res://world/main/rain.tscn" id="5_rain"]
+[ext_resource type="PackedScene" path="res://world/main/foreground.tscn" id="6_fg"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="7_pause"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -15,9 +17,15 @@ script = ExtResource("1_main")
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 
+[node name="FX" type="Node2D" parent="." groups=["fx_layer"]]
+
+[node name="Foreground" parent="." instance=ExtResource("6_fg")]
+
 [node name="Rain" parent="." instance=ExtResource("5_rain")]
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pause")]
 
 [node name="TransitionLayer" type="CanvasLayer" parent="."]
 layer = 10

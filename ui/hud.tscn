@@ -1,50 +1,138 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_under.png" id="2_under"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_fill.png" id="3_fill"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_frame.png" id="4_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/boss_bar_under.png" id="5_bunder"]
+[ext_resource type="Texture2D" path="res://assets/ui/boss_bar_fill.png" id="6_bfill"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="7_cinzel"]
+[ext_resource type="FontFile" path="res://assets/fonts/Rajdhani-Medium.ttf" id="8_rajdhani"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 2
 script = ExtResource("1_hud")
 
-[node name="Margin" type="MarginContainer" parent="."]
-offset_right = 120.0
-offset_bottom = 26.0
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
+[node name="HurtFlash" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.7, 0.05, 0.05, 0)
 
-[node name="HealthBar" type="HBoxContainer" parent="Margin"]
-layout_mode = 2
-theme_override_constants/separation = 2
+[node name="Energy" type="TextureProgressBar" parent="."]
+texture_filter = 4
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 34.0
+offset_bottom = 33.0
+max_value = 99.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("2_under")
+texture_progress = ExtResource("3_fill")
 
-[node name="RoomLabel" type="Label" parent="."]
+[node name="Frame" type="TextureRect" parent="Energy"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_frame")
+expand_mode = 1
+
+[node name="HealthBar" type="HBoxContainer" parent="."]
+texture_filter = 4
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 24.0
+theme_override_constants/separation = 1
+
+[node name="AreaTitle" type="VBoxContainer" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -150.0
-offset_top = 20.0
-offset_right = 150.0
-offset_bottom = 40.0
+offset_left = -160.0
+offset_top = 54.0
+offset_right = 160.0
+offset_bottom = 104.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.5, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+mouse_filter = 2
+alignment = 1
+
+[node name="LineTop" type="ColorRect" parent="AreaTitle"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.85, 0.9, 1, 0.6)
+
+[node name="Name" type="Label" parent="AreaTitle"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.95, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = ExtResource("7_cinzel")
+theme_override_font_sizes/font_size = 20
+text = "Área"
 horizontal_alignment = 1
+
+[node name="LineBottom" type="ColorRect" parent="AreaTitle"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.85, 0.9, 1, 0.6)
 
 [node name="MessageLabel" type="Label" parent="."]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -60.0
-offset_right = -16.0
-offset_bottom = -12.0
+offset_left = 30.0
+offset_top = -78.0
+offset_right = -30.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.92, 0.8, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 10
+theme_override_fonts/font = ExtResource("8_rajdhani")
+theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
+
+[node name="BossBar" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -32.0
+offset_right = 150.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="BossBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.75, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("7_cinzel")
+theme_override_font_sizes/font_size = 10
+text = "Jefe"
+horizontal_alignment = 1
+
+[node name="Bar" type="TextureProgressBar" parent="BossBar"]
+texture_filter = 4
+custom_minimum_size = Vector2(300, 10)
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("5_bunder")
+texture_progress = ExtResource("6_bfill")

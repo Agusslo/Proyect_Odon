@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/background/foreground.png" id="1_fg"]
+
+[node name="Foreground" type="Node2D"]
+z_index = 60
+modulate = Color(1, 1, 1, 0.92)
+
+[node name="Layer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.25, 1.08)
+repeat_size = Vector2(600, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Layer"]
+scale = Vector2(0.3125, 0.25)
+texture = ExtResource("1_fg")
+centered = false
+offset = Vector2(0, -80)

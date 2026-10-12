@@ -4,8 +4,9 @@ extends Node2D
 ##
 ## Estructura que espera encontrar (ver README):
 ##   Room (Node2D, este script)
-##   ├── Decor (Node2D)         -> carteles y faroles (detrás de todo)
-##   ├── Tiles (TileMapLayer)   -> define también los límites de la cámara
+##   ├── Decor (Node2D)         -> carteles, faroles, puestos (detrás de todo)
+##   ├── Atmosphere             -> niebla baja y motas de luz
+##   ├── Tiles (TileMapLayer)   -> tiles HD de 64 px escalados a 0.25; definen los límites de la cámara
 ##   ├── PlayerStart (Marker2D) -> spawn por defecto (partida nueva)
 ##   ├── Doors (Node2D)         -> instancias de door.tscn
 ##   ├── Objects (Node2D)       -> terminales, pickups, pinches...
@@ -32,8 +33,9 @@ func get_spawn_position(spawn_id: String) -> Vector2:
 ## Main lo usa para que la cámara no muestre nada fuera de la sala.
 func get_bounds() -> Rect2:
 	var used := tiles.get_used_rect()
-	var tile_size := Vector2(tiles.tile_set.tile_size)
+	# Los tiles son HD (64 px) y la capa está escalada a 0.25: cada celda mide 16 en el juego.
+	var cell := Vector2(tiles.tile_set.tile_size) * tiles.scale
 	return Rect2(
-		tiles.global_position + Vector2(used.position) * tile_size,
-		Vector2(used.size) * tile_size
+		tiles.global_position + Vector2(used.position) * cell,
+		Vector2(used.size) * cell
 	)

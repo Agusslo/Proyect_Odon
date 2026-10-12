@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/objects/atmosphere.gd" id="1_atmo"]
+[ext_resource type="Texture2D" path="res://assets/fx/fog_puff.png" id="2_puff"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="3_glow"]
+
+[sub_resource type="Gradient" id="Gradient_fog"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(0.55, 0.7, 0.78, 0, 0.55, 0.7, 0.78, 0.13, 0.55, 0.7, 0.78, 0.13, 0.55, 0.7, 0.78, 0)
+
+[sub_resource type="Gradient" id="Gradient_motes"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(1, 0.75, 0.45, 0, 1, 0.75, 0.45, 0.7, 1, 0.75, 0.45, 0.7, 1, 0.75, 0.45, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[node name="Atmosphere" type="Node2D"]
+script = ExtResource("1_atmo")
+
+[node name="Fog" type="CPUParticles2D" parent="."]
+z_index = 28
+amount = 22
+lifetime = 9.0
+preprocess = 9.0
+texture = ExtResource("2_puff")
+emission_shape = 3
+emission_rect_extents = Vector2(240, 14)
+direction = Vector2(1, 0)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.35
+scale_amount_max = 0.6
+color_ramp = SubResource("Gradient_fog")
+
+[node name="Motes" type="CPUParticles2D" parent="."]
+z_index = 4
+material = SubResource("CanvasItemMaterial_add")
+amount = 24
+lifetime = 7.0
+preprocess = 7.0
+texture = ExtResource("3_glow")
+emission_shape = 3
+emission_rect_extents = Vector2(240, 136)
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -2)
+initial_velocity_min = 2.0
+initial_velocity_max = 6.0
+scale_amount_min = 0.006
+scale_amount_max = 0.014
+color_ramp = SubResource("Gradient_motes")

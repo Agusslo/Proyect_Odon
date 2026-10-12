@@ -27,3 +27,22 @@ signal player_died
 ## Mostrar un mensaje en pantalla (habilidad nueva, partida guardada, etc.).
 @warning_ignore("unused_signal")
 signal message_requested(text: String, duration: float)
+
+## La carga de energía del brazo de bronce cambió (el HUD la dibuja).
+@warning_ignore("unused_signal")
+signal player_energy_changed(current: int, max_value: int)
+
+## El jugador recibió daño (el HUD hace un destello rojo).
+@warning_ignore("unused_signal")
+signal player_hurt
+
+## Empieza una pelea contra un jefe (el HUD muestra su barra de vida).
+@warning_ignore("unused_signal")
+signal boss_started(boss_name: String, max_health: int)
+
+@warning_ignore("unused_signal")
+signal boss_health_changed(current: int, max_value: int)
+
+## El jefe fue derrotado (o la pelea se interrumpió): el HUD oculta la barra.
+@warning_ignore("unused_signal")
+signal boss_ended(defeated: bool)

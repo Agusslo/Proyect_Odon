@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/title_screen.gd" id="1_title"]
+[ext_resource type="PackedScene" path="res://world/main/city_background.tscn" id="2_bg"]
+[ext_resource type="PackedScene" path="res://world/main/rain.tscn" id="3_rain"]
+[ext_resource type="Script" path="res://ui/menu_button.gd" id="4_btn"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="5_cinzel"]
+[ext_resource type="FontFile" path="res://assets/fonts/Rajdhani-Medium.ttf" id="6_rajdhani"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn"]
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_title")
+
+[node name="CityBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(240, 135)
+
+[node name="Rain" parent="." instance=ExtResource("3_rain")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Shade" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.35)
+
+[node name="Logo" type="VBoxContainer" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 40.0
+offset_right = 160.0
+offset_bottom = 120.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="UI/Logo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.7)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_cinzel")
+theme_override_font_sizes/font_size = 48
+text = "ODÓN"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UI/Logo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.45, 1)
+theme_override_fonts/font = ExtResource("6_rajdhani")
+theme_override_font_sizes/font_size = 12
+text = "La ciudad-colmena"
+horizontal_alignment = 1
+
+[node name="Box" type="VBoxContainer" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -100.0
+offset_right = 80.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 2
+
+[node name="Continue" type="Button" parent="UI/Box"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rajdhani")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
+text = "Continuar"
+script = ExtResource("4_btn")
+
+[node name="New" type="Button" parent="UI/Box"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rajdhani")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
+text = "Nueva partida"
+script = ExtResource("4_btn")
+
+[node name="Quit" type="Button" parent="UI/Box"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rajdhani")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
+text = "Salir"
+script = ExtResource("4_btn")

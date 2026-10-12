@@ -6,6 +6,8 @@ extends CharacterBody2D
 ##   - HealthComponent   -> la vida
 ##   - HurtboxComponent  -> recibir golpes
 ##   - SwordComponent    -> atacar
+## Además lleva la CARGA del brazo de bronce: cada golpe que conecta la llena,
+## y manteniendo "Curar" (L) se gasta para recuperar una celda de vida.
 ## Las habilidades se consultan a GameState: si no están desbloqueadas, no existen.
 ##
 ## Orden de cada frame de física (_physics_process):
@@ -14,9 +16,10 @@ extends CharacterBody2D
 
 signal state_changed(new_state: State)
 
-enum State { IDLE, RUN, JUMP, FALL, DASH, GLIDE, HURT, DEAD }
+enum State { IDLE, RUN, JUMP, FALL, DASH, GLIDE, HURT, HEAL, DEAD }
 
 const SAFE_CONFIRM_FRAMES := 10
+const DUST := preload("res://fx/dust_puff.tscn")
 
 @export_group("Movimiento horizontal")
 @export var max_speed: float = 150.0      # px/s
@@ -49,11 +52,20 @@ const SAFE_CONFIRM_FRAMES := 10
 @export var hurt_knockback: Vector2 = Vector2(170.0, -170.0)
 @export var hurt_control_lock: float = 0.25      # segundos sin control tras un golpe
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@export_group("Carga y curación")
+@export var energy_max: int = 99
+@export var energy_per_hit: int = 11     # 3 golpes = 1 curación
+@export var heal_cost: int = 33
+@export var heal_time: float = 0.85      # segundos manteniendo el botón
+
+## El dibujo del personaje (partes + huesos). Ver cutout_rig.gd.
+@onready var sprite: CutoutRig = $KnightRig
 @onready var health: HealthComponent = $HealthComponent
 @onready var hurtbox: HurtboxComponent = $HurtboxComponent
 @onready var sword: SwordComponent = $Sword
 @onready var camera: Camera2D = $Camera2D
+@onready var heal_particles: CPUParticles2D = $HealParticles
+@onready var dash_trail: CPUParticles2D = $DashTrail
 
 var state: State = State.IDLE
 var facing: int = 1  # 1 = derecha, -1 = izquierda
@@ -70,11 +82,19 @@ var _control_lock_timer: float = 0.0
 var _last_safe_position: Vector2
 var _safe_candidate: Vector2
 var _safe_frames: int = 0
+var energy: int = 0
+var _heal_timer: float = 0.0
+var _was_on_floor: bool = true
+var _fall_speed: float = 0.0
 
 
 func _ready() -> void:
 	add_to_group("player")
 	_last_safe_position = global_position
+	GameFeel.register_camera(camera)
+	health.max_health = GameState.get_max_health()
+	health.reset_health()
+	GameState.max_health_changed.connect(_on_max_health_changed)
 
 	health.health_changed.connect(_on_health_changed)
 	health.health_depleted.connect(_on_health_depleted)
@@ -83,6 +103,7 @@ func _ready() -> void:
 
 	# Avisamos la vida inicial al HUD (diferido: el HUD puede no estar listo aún).
 	_on_health_changed.call_deferred(health.current_health, health.max_health)
+	_set_energy.call_deferred(0)
 
 
 func _physics_process(delta: float) -> void:
@@ -96,6 +117,9 @@ func _physics_process(delta: float) -> void:
 
 	if _dash_timer > 0.0:
 		_process_dash(delta)
+	elif _handle_heal(delta):
+		_apply_gravity(delta)
+		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 	else:
 		_apply_gravity(delta)
 		_handle_horizontal(delta)
@@ -103,7 +127,9 @@ func _physics_process(delta: float) -> void:
 		_handle_dash_input()
 		_handle_attack_input()
 
+	_fall_speed = velocity.y
 	move_and_slide()
+	_check_landing()
 	_update_safe_position()
 	_update_state()
 	_update_visuals()
@@ -124,6 +150,8 @@ func teleport_to(new_position: Vector2) -> void:
 ## Vuelve a la vida después de morir.
 func revive() -> void:
 	health.reset_health()
+	_heal_timer = 0.0
+	_set_energy(0)
 	_control_lock_timer = 0.0
 	sprite.visible = true
 	_set_state(State.IDLE)
@@ -219,6 +247,8 @@ func _handle_dash_input() -> void:
 	_dash_timer = dash_duration
 	_dash_cooldown_timer = dash_cooldown
 	_can_dash = false  # en el aire: un solo dash hasta volver a tocar el suelo
+	dash_trail.emitting = true
+	GameFeel.spawn_fx(DUST, global_position + Vector2(0, 12))
 
 
 func _process_dash(delta: float) -> void:
@@ -226,6 +256,49 @@ func _process_dash(delta: float) -> void:
 	velocity = Vector2(facing * dash_speed, 0.0)  # sin gravedad durante el dash
 	if _dash_timer <= 0.0:
 		velocity.x = facing * max_speed
+		dash_trail.emitting = false
+
+
+# --- Curación ----------------------------------------------------------------
+
+## Devuelve true mientras el jugador está canalizando una curación.
+func _handle_heal(delta: float) -> bool:
+	var can_heal := (
+		_can_control() and is_on_floor() and not sword.is_attacking
+		and energy >= heal_cost and health.current_health < health.max_health
+	)
+	if not (can_heal and Input.is_action_pressed("heal")):
+		if _heal_timer > 0.0:
+			_heal_timer = 0.0
+			heal_particles.emitting = false
+		return false
+
+	_heal_timer += delta
+	heal_particles.emitting = true
+	if _heal_timer >= heal_time:
+		_heal_timer = 0.0
+		heal_particles.emitting = false
+		_set_energy(energy - heal_cost)
+		health.heal(1)
+		GameFeel.shake(1.5, 0.15)
+	return true
+
+
+func _set_energy(value: int) -> void:
+	energy = clampi(value, 0, energy_max)
+	EventBus.player_energy_changed.emit(energy, energy_max)
+
+
+func _on_max_health_changed(new_max: int) -> void:
+	health.max_health = new_max
+	health.reset_health()
+
+
+func _check_landing() -> void:
+	var on_floor := is_on_floor()
+	if on_floor and not _was_on_floor and _fall_speed > 220.0:
+		GameFeel.spawn_fx(DUST, global_position + Vector2(0, 12))
+	_was_on_floor = on_floor
 
 
 # --- Ataque ------------------------------------------------------------------
@@ -242,7 +315,12 @@ func _handle_attack_input() -> void:
 	sword.attack(direction)
 
 
-func _on_sword_hit_landed(direction: Vector2) -> void:
+func _on_sword_hit_landed(direction: Vector2, target: Node2D) -> void:
+	# Solo los enemigos dan carga (no las vasijas ni los proyectiles).
+	if target and target.is_in_group("enemies"):
+		_set_energy(energy + energy_per_hit)
+	GameFeel.hit_stop(0.045)
+	GameFeel.shake(1.5, 0.1)
 	if direction == Vector2.DOWN:
 		# Pogo: rebotar sobre lo que golpeamos y recuperar las habilidades aéreas.
 		velocity.y = pogo_velocity
@@ -264,10 +342,26 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 	velocity = Vector2(away * hurt_knockback.x, hurt_knockback.y)
 	_control_lock_timer = hurt_control_lock
 	_dash_timer = 0.0
+	_heal_timer = 0.0
+	heal_particles.emitting = false
+	dash_trail.emitting = false
+	_flash_white()
+	EventBus.player_hurt.emit()
+	GameFeel.hit_stop(0.12, 0.02)
+	GameFeel.shake(4.0, 0.3)
 
 	if hitbox.is_hazard:
 		# Trampa: volver al último suelo seguro (diferido, estamos en un callback de física).
 		teleport_to.call_deferred(_last_safe_position)
+
+
+func _flash_white() -> void:
+	var mat := sprite.material as ShaderMaterial
+	if mat == null:
+		return
+	mat.set_shader_parameter("flash", 1.0)
+	var tween := create_tween()
+	tween.tween_method(func(v: float) -> void: mat.set_shader_parameter("flash", v), 1.0, 0.0, 0.2)
 
 
 func _on_health_changed(current: int, max_value: int) -> void:
@@ -315,6 +409,8 @@ func _update_state() -> void:
 	var new_state: State
 	if _dash_timer > 0.0:
 		new_state = State.DASH
+	elif _heal_timer > 0.0:
+		new_state = State.HEAL
 	elif _control_lock_timer > 0.0:
 		new_state = State.HURT
 	elif not is_on_floor():
@@ -348,6 +444,7 @@ func _update_visuals() -> void:
 	var animation: StringName
 	match state:
 		State.DASH: animation = &"dash"
+		State.HEAL: animation = &"heal"
 		State.HURT: animation = &"hurt"
 		State.GLIDE: animation = &"glide"
 		State.JUMP: animation = &"jump"

@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Texture2D" path="res://assets/props/lamp.png" id="1_lamp"]
-[ext_resource type="Texture2D" path="res://assets/props/glow.png" id="2_glow"]
-[ext_resource type="Texture2D" path="res://assets/props/light_cone.png" id="3_cone"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/fx/light_cone.png" id="3_cone"]
 [ext_resource type="Script" path="res://components/neon_flicker_component.gd" id="4_flicker"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
@@ -11,22 +11,24 @@ blend_mode = 1
 [node name="StreetLamp" type="Node2D"]
 
 [node name="Pole" type="Sprite2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(0, -28)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_lamp")
 
 [node name="Light" type="Node2D" parent="."]
 
 [node name="Cone" type="Sprite2D" parent="Light"]
-modulate = Color(1, 0.62, 0.3, 0.42)
+modulate = Color(1, 0.68, 0.32, 0.35)
 material = SubResource("CanvasItemMaterial_add")
-position = Vector2(4, -14)
+position = Vector2(4.5, -14)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_cone")
 
 [node name="Bulb" type="Sprite2D" parent="Light"]
-modulate = Color(1, 0.7, 0.4, 0.85)
+modulate = Color(1, 0.7, 0.35, 0.8)
 material = SubResource("CanvasItemMaterial_add")
-position = Vector2(4, -43)
-scale = Vector2(0.45, 0.3)
+position = Vector2(4.5, -48)
+scale = Vector2(0.16, 0.16)
 texture = ExtResource("2_glow")
 
 [node name="NeonFlickerComponent" type="Node" parent="." node_paths=PackedStringArray("target")]

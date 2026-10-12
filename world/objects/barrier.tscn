@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/objects/barrier.gd" id="1_barrier"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="2_glow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(10, 48)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[node name="Barrier" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_barrier")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Beam" type="Node2D" parent="."]
+z_index = 20
+
+[node name="Glow" type="Sprite2D" parent="Beam"]
+modulate = Color(1, 0.25, 0.2, 0.7)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.09, 0.3)
+texture = ExtResource("2_glow")
+
+[node name="Core" type="Sprite2D" parent="Beam"]
+modulate = Color(1, 0.8, 0.7, 1)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.02, 0.22)
+texture = ExtResource("2_glow")
