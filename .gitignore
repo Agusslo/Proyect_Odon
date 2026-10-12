@@ -1,0 +1,11 @@
+# Caché local de Godot: se regenera sola, NUNCA se sube
+.godot/
+
+# Exportaciones
+/builds/
+/exports/
+*.tmp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

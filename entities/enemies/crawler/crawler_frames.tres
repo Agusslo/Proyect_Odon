@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/crawler.png" id="1_ljhsv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xy6ti"]
+atlas = ExtResource("1_ljhsv")
+region = Rect2(0, 0, 20, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n03n2"]
+atlas = ExtResource("1_ljhsv")
+region = Rect2(20, 0, 20, 14)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xy6ti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n03n2")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 4.0
+}]

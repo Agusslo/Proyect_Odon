@@ -1,0 +1,11 @@
+# Normalizar saltos de línea (evita conflictos entre Windows / Linux / Mac)
+* text=auto eol=lf
+
+# Binarios: nunca intentar mergearlos
+*.png binary
+*.jpg binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
