@@ -4,7 +4,7 @@ extends Area2D
 ## Una vez agarrado, no vuelve a aparecer (aunque se vuelva a la sala):
 ## eso es lo que hace funcionar el backtracking.
 
-@export_enum("double_jump", "dash", "glide") var ability: String = "double_jump"
+@export_enum("double_jump", "dash", "glide", "garra") var ability: String = "double_jump"
 ## ÚNICO en todo el juego. Ej: "pickup_alas". Si dos pickups comparten id, se pisan.
 @export var pickup_id: String = ""
 

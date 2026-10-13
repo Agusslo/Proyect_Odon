@@ -1,71 +1,81 @@
-# ODÓN — La ciudad-colmena
+# ODÓN — El Caballito del Diablo
 
-Metroidvania 2D en **Godot 4.7** (GDScript 2.0), con arte en alta resolución, animación por huesos y arquitectura por componentes pensada para que 3 personas trabajen en paralelo sin pisarse.
+Metroidvania 2D en **Godot 4.7** (GDScript 2.0). Pixel art oscuro cyberpunk, combate rápido, y una protagonista con un brazo demoníaco. Arquitectura por componentes pensada para que 3 personas trabajen en paralelo sin pisarse.
+
+> El documento completo de historia (mundo, pacto, actos, jefes y finales) está en el doc **"ODÓN — Lore del Caballito del Diablo"**. Acá va el resumen y todo lo técnico.
 
 ---
 
-## La idea del juego
+## La historia en corto
 
-**Odón** era una ciudad-colmena: millones de insectos viviendo en una torre de panales. Una corporación los "mejoró" fusionándolos con máquinas, y algo salió mal. Una señal llamada **la Estática** corrompió a todo bicho con un implante: ahora son chatarra viva que ataca a cualquiera.
+**Odón** es una ciudad-colmena que la corporación **Colmena Reina** levantó sobre el pantano de las libélulas, después de exterminarlas. Al perforar el Fondo para los cimientos despertaron a **Zébul, el Señor de las Moscas**. Su zumbido, **la Estática**, vuelve locos a todos los bichos con implantes.
 
-Sos **la última Libélula guardiana**. Tenés un yelmo de cuernos, alas de libélula, una katana y un **brazo de bronce** que absorbe la energía de los enemigos que golpeás. Con esa energía te curás. Tu objetivo: bajar por la ciudad hasta la Torre y apagar la Estática.
+**Ninfa** era la última guardiana libélula. Murió ahogada en el barro cuando drenaron el pantano. En el Fondo, Zébul le ofreció volver a la vida a cambio de cargar su brazo: un brazo demoníaco que quema, desgarra y **devora**. Cada criatura que come la hace más fuerte… y le devuelve a Zébul un pedazo de su poder.
 
-**Lo que tomamos de Hollow Knight** no es su personaje sino sus cualidades: silueta compacta de cabeza grande, combate rápido y preciso, curarse con la energía de pegar, atmósfera melancólica y un mapa que se abre a medida que ganás habilidades.
+En muchos países a la libélula le dicen *caballito del diablo*. Ahora tienen razón.
 
-### Los enemigos
+## Lo que la hace distinta (y no una copia de Hollow Knight)
+
+| Sistema | Cómo funciona |
+|---|---|
+| **Devorar** (L / F) | No hay curación quieta. Los enemigos con poca vida quedan **aturdidos y brillan en rojo**: acercate y devoralos. Cura 1 de vida y da Brasas. Los jefes no se aturden: sueltan **trozos de carne** al recibir mucho daño |
+| **Brasas** | La barra de fuego de 3 segmentos (arriba a la izquierda, debajo de la vida). Se ganan pegando (el zarpazo da el doble) y devorando. **Cada segmento lleno = una Garra Infernal**. Se apagan solas si dejás de pelear |
+| **Combo** | Katana (tajo de arriba) → katana (tajo de abajo) → **Zarpazo** con el brazo demoníaco: doble de daño y mucho más empuje. **Pegar no te mueve**: podés pegar quieta o corriendo |
+| **Hambre** | Si pasan 2 minutos sin devorar, el brazo tiene Hambre: pega +1, pero cada 25 s te muerde 1 de vida (nunca la última). Devorar o una charca lo calman |
+| **Charcas** | Los puntos de guardado: Ninfa se sumerge como cuando era ninfa. Curan todo, calman el Hambre y guardan |
+| **Muerte** | Despertás en la última charca y el brazo se queda con tus Brasas. No hay sombra que perseguir |
+
+## Poderes
+
+| Poder | Qué hace | Dónde se consigue | Qué abre |
+|---|---|---|---|
+| **Alas de Ceniza** | Doble salto: las alas rotas arden un instante | Mercado de Neón | Cornisas de 5 tiles |
+| **Garra Infernal** (I / V) | Lanza una mano de fuego que atraviesa enemigos. Cuesta 1 segmento de Brasas (33) | **Desde el principio**: es el poder del brazo | (pensada para romper sellos de ceniza) |
+| **Galope del Diablo** (dash) | Te volvés sombra: invulnerable, atravesás enemigos y los quemás | Azotea Sigma | Abismos de 12 tiles |
+| **Planeo de Brasas** | Mantener saltar en el aire | Recompensa de La Recolectora | El campo de pinches del Mirador |
+| **Fragmento de Núcleo** | +1 vida máxima | Torre de Cables y Ductos Bajos (escondidos) | — |
+
+## Enemigos
 
 | Enemigo | Qué hace | Cómo se le gana |
 |---|---|---|
-| **Escarabajo Chatarra** | Patrulla el piso y da vuelta en paredes y bordes | 3 espadazos. Saltale encima y pegá hacia abajo (pogo) |
-| **Polilla de Señal** | Flota en su zona y se lanza en picada cuando te ve | 2 espadazos. Esperá que baje |
-| **Garrapata Torreta** | Se infla y escupe una bola de plasma cuando te tiene a tiro | 3 espadazos. **El proyectil se puede devolver con la espada** |
-| **La Recolectora** (jefe) | Un escarabajo-excavadora gigante con 3 ataques: embestida, salto con onda expansiva y lluvia de chatarra. A media vida se enfurece y todo va más rápido | 34 de vida. Esquivá la embestida, saltá la onda y castigá después de cada ataque |
+| **Escarabajo Chatarra** | Patrulla el piso | 2 golpes lo aturden: devoralo |
+| **Polilla de Señal** | Flota y se lanza en picada cuando te ve | 1 golpe la aturde |
+| **Garrapata Torreta** | Escupe bolas de plasma | **El proyectil se devuelve con la katana** |
+| **La Recolectora** (jefe) | Embestida, salto con onda expansiva y lluvia de chatarra. A media vida se enfurece | 34 de vida. Devorá los trozos que suelta para aguantar |
 
-### Habilidades
-
-| Habilidad | Dónde está | Qué abre |
-|---|---|---|
-| **Alas de Libélula** (doble salto) | Mercado de Neón, arriba a la derecha | Cornisas de 5 tiles de alto |
-| **Impulso Sináptico** (dash) | Azotea Sigma, al final | Abismos de 12 tiles en la Pasarela Rota |
-| **Planeo Nocturno** (planeo) | Recompensa por vencer a La Recolectora | El campo de pinches del Mirador |
-| **Fragmento de Núcleo** (+1 vida máx.) | Hay 2 escondidos: Torre de Cables y Ductos Bajos | — |
-
-### El mapa: Distrito Colmena Baja
+## El mapa: Distrito Colmena Baja
 
 ```
                          ┌──────────────┐
                          │ 3 TORRE DE   │ (vertical)
                          │   CABLES     │──────────┐
-                         │ ◆ núcleo     │          │
+                         │          ◆   │          │
                          └──────┬───────┘   ┌──────┴────────┐   ┌──────────────┐   ┌──────────────┐
                                 │           │ 4 AZOTEA      │───│ 5 PASARELA   │───│ 6 FOSA DE    │
 ┌────────────┐   ┌──────────────┴──┐        │   SIGMA       │   │   ROTA       │   │  CHATARRA    │
-│ 1 CALLEJÓN │───│ 2 MERCADO DE    │        │ ● nido        │   │ abismos:     │   │ ☠ JEFE       │
-│   UMBRAL   │   │   NEÓN          │        │ ★ DASH        │   │ pide DASH    │   │ ★ PLANEO     │
-│ ● nido     │   │ ★ DOBLE SALTO   │        └───────────────┘   └──────────────┘   └──────┬───────┘
+│ 1 CALLEJÓN │───│ 2 MERCADO DE    │        │ ● charca      │   │ abismos:     │   │ ☠ JEFE       │
+│   UMBRAL   │   │   NEÓN          │        │ ★ GALOPE      │   │ pide GALOPE  │   │ ★ PLANEO     │
+│ ● charca   │   │ ★ ALAS          │        └───────────────┘   └──────────────┘   └──────┬───────┘
 │ inicio     │   └─────────────────┘                                                      │
 └─────┬──────┘                                                                            │
-      │ (cornisa: pide DOBLE SALTO)   ┌──────────────┐   ┌──────────────────────┐         │
+      │ (cornisa: pide ALAS)          ┌──────────────┐   ┌──────────────────────┐         │
       └───────────────────────────────│ 8 DUCTOS     │───│ 7 MIRADOR DEL        │─────────┘
-                                      │   BAJOS      │   │   ENJAMBRE           │
-                                      │ ◆ núcleo     │   │ ● nido               │
-                                      └──────────────┘   │ pinches: pide PLANEO │
+                                      │   BAJOS  ◆   │   │   ENJAMBRE           │
+                                      └──────────────┘   │ ● charca             │
+                                                         │ pinches: pide PLANEO │
                                                          └──────────────────────┘
-● nido = punto de guardado    ★ = habilidad    ◆ = Fragmento de Núcleo
+● charca (guardado)    ★ habilidad    ◆ Fragmento de Núcleo
 ```
-
-El recorrido es un **circuito**: después del jefe, el Mirador y los Ductos te devuelven al Callejón Umbral por la cornisa que viste al principio y no podías subir. Ese "¡ah, era por acá!" es el corazón del género.
 
 ---
 
 ## Cómo abrirlo
 
-1. Abrí Godot 4.7, elegí **Importar**, seleccioná el archivo `project.godot` y después **Importar y editar**.
-2. Apretá **F5** (o el botón ▶ arriba a la derecha). Arranca la pantalla de título.
+1. Abrí Godot 4.7, elegí **Importar**, seleccioná `project.godot` y después **Importar y editar**.
+2. Apretá **F5**. Arranca la pantalla de título; con **Nueva partida** se ve la intro (cualquier botón la saltea).
 
-> La primera vez Godot tarda un poco en importar las imágenes HD. Es normal.
-
-> **Para probar algo puntual:** abrí `world/main/main.tscn`, seleccioná el nodo `Main` y en el Inspector cambiá **Starting Room Path** a la sala que quieras. Desmarcá **Load Save On Start** para empezar siempre de cero. Con **F6** se juega la escena abierta.
+> **Para probar algo puntual:** abrí `world/main/main.tscn`, seleccioná `Main` y en el Inspector cambiá **Starting Room Path**. Desmarcá **Load Save On Start** para empezar de cero y **Play Intro** para no ver la intro cada vez.
 
 ## Controles
 
@@ -73,255 +83,181 @@ El recorrido es un **circuito**: después del jefe, el Mirador y los Ductos te d
 |---|---|---|
 | Moverse | A / D o flechas | Stick izq. / cruceta |
 | Saltar (mantener = más alto) | Espacio o Z | A |
-| Planear *(desbloqueable)* | Mantener saltar mientras caés | A |
-| Atacar (+ arriba / + abajo en el aire) | J o X | X |
-| Dash *(desbloqueable)* | K, C o Shift | RB |
-| **Curarse** (mantener) | L o F | LB |
-| Interactuar (nido) | E | Y |
+| Atacar (combo de 3; + arriba / + abajo en el aire) | J o X | X |
+| **Devorar** | L o F | LB |
+| **Garra Infernal** | I o V | B |
+| Galope del Diablo (dash) | K, C o Shift | RB |
+| Planear | Mantener saltar mientras caés | A |
+| Sumergirse en la charca | E | Y |
 | Pausa | Esc | Start |
+| *Prueba: desbloquear todos los poderes* | F1 | — |
 
-**Curarse:** cada espadazo a un enemigo llena el medallón de bronce (arriba a la izquierda). Con un tercio lleno, mantené **L** quieto en el piso y recuperás una celda. Si te pegan mientras te curás, se corta.
+**Cómo se usan los poderes**
+- **Combo:** apretá J tres veces seguidas. El tercer golpe es el **Zarpazo**: más daño y empuje. Si apretás un poquito antes de que termine el golpe anterior, **no se pierde**: sale apenas se pueda (buffer). Pegar no te frena ni te empuja: podés seguir corriendo mientras atacás.
+- **Devorar:** pegale a un enemigo hasta que quede **aturdido brillando en rojo** (nunca se muere sin aturdirse antes). Acercate y apretá **L**: te curás 1 y ganás Brasas. Si le volvés a pegar, muere sin comértelo.
+- **Garra Infernal:** apretá **I** cuando tengas **al menos un segmento de Brasas lleno** (late y brilla cuando está listo). Si no alcanza, la barra tiembla en rojo y aparece un aviso. Para llenar Brasas: pegale a enemigos (el zarpazo da el doble) o devoralos.
+- **Galope del Diablo:** **K** o Shift. Mientras dura sos intocable y quemás lo que atravesás.
+- **Alas de Ceniza:** saltar otra vez en el aire. **Planeo:** mantener saltar mientras caés.
+- Alas, Galope y Planeo se consiguen recorriendo el mapa. Para probarlos todos de una, apretá **F1** en el juego (también llena las Brasas).
 
-## Qué ya funciona
+**El HUD (arriba a la izquierda)**
+- **Retrato** de Ninfa en un aro de hierro. Con Hambre late en rojo y aparece "HAMBRE".
+- **Vida:** celdas hexagonales. Al perder una destella blanca y se apaga; al curarte "salta". Con **1 sola de vida**, la última se pone roja y late.
+- **Brasas:** 3 segmentos de fuego. Cuando uno se llena destella; los llenos brillan suave.
 
-- **Pantalla de título** (Continuar / Nueva partida / Salir) y **menú de pausa**.
-- **Movimiento** con aceleración, coyote time, jump buffer, salto de altura variable, doble salto, dash y planeo.
-- **Combate** con espadazo hacia adelante, arriba y abajo, pogo, **hit-stop** (el juego se congela una fracción de segundo al pegar), temblor de cámara, chispas y retroceso.
-- **Energía y curación** al estilo Hollow Knight.
-- **3 enemigos y 1 jefe** con su propia IA.
-- **8 salas** conectadas, con 3 nidos de guardado, 3 habilidades, 2 fragmentos de vida y una arena de jefe con barreras.
-- **Guardado en disco**: habilidades, vida máxima, objetos agarrados, jefe vencido, salas visitadas y último nido.
-- **Muerte y reaparición** en el último nido.
-- **HUD** con celdas de vida hexagonales, medallón de energía, barra del jefe, nombre de la zona la primera vez que entrás, y destello rojo al recibir daño.
-- **Ambiente**: ciudad en 5 capas de parallax con la Torre-colmena al fondo, lluvia, niebla baja, motas de luz, vapor, carteles de neón que titilan y una capa de primer plano.
+---
+
+## El look: pixel art oscuro cyberpunk
+
+- **Resolución del juego: 480 × 270**, escalada a la ventana. Todo el arte es pixel art donde **1 píxel = 1 unidad del juego**.
+- **Filtro "Nearest"** en todo el proyecto (Proyecto > Configuración > Renderizado > Texturas). Nada de suavizado: los píxeles se ven filosos.
+- **Post-proceso** (`shaders/post_fx.gdshader`, nodo `PostFX` en `main.tscn`): bloom para los neones y el fuego, aberración cromática suave, sombras azuladas, viñeta y líneas de barrido muy sutiles. Todo se ajusta desde el Inspector.
+- **Paleta**: noche azul petróleo, concreto casi negro, y luces en rojo, turquesa, ámbar y **magenta**. El rojo-fuego queda reservado para Ninfa y su brazo.
+
+### Ninfa: animada en partes, convertida a píxeles
+
+Ninfa sale **directamente del concepto** (`art_source/ninfa/concepto.png`), sin redibujarla:
+
+1. La vista de costado se separó en partes: cabeza, alas, brazo demoníaco, katana, piernas y cuerpo (`art_source/ninfa/partes/`).
+2. `art_source/ninfa/herramientas/ninfa_anim.py` anima esas partes rotándolas sobre sus articulaciones, y **convierte cada cuadro a pixel art** (56 px de alto) con una paleta fija, contorno de 1 px, ojo blanco y grietas de fuego. Cada animación son unas pocas **poses clave** que se interpolan con suavizado; la capa de la cintura para abajo es una parte aparte que flamea, y las alas tiemblan como las de una libélula.
+3. `build_ninfa_frames.gd` arma `entities/player/ninfa_frames.tres` (un `SpriteFrames`) con las tiras de `assets/characters/ninfa/`.
+4. En el juego, `player.gd` agrega el "jugo": se estira al saltar, se aplasta al caer, se inclina al correr y hace un pequeño rebote al darse vuelta (`_squash()`).
+
+Animaciones: `idle, run, jump, fall, attack, attack2, zarpazo, attack_up, attack_down, dash, glide, hurt, devour, cast, death, rest`.
+
+**Para retocar una animación**: en `ninfa_anim.py` cada animación es una lista de poses (ángulo por parte). Cambiá los números, corré:
+```
+python3 ninfa_anim.py ../partes ../../../assets/characters/ninfa
+godot --headless --path <proyecto> --script art_source/ninfa/herramientas/build_ninfa_frames.gd -- <carpeta>/frames.json
+```
+(necesita Python con numpy, scipy y Pillow). También se pueden editar los PNG de `assets/characters/ninfa/` a mano en Aseprite o LibreSprite: cada tira tiene cuadros de 140×97.
 
 ---
 
 ## Estructura de carpetas
 
-Organizada **por entidad** (todo lo de una cosa en un mismo lugar), no por tipo de archivo:
-
 ```
 res://
-├── autoloads/              Singletons globales (siempre cargados)
-│   ├── game_state.gd         habilidades, flags, vida extra, guardado
-│   ├── event_bus.gd          señales globales entre escenas
-│   └── game_feel.gd          hit-stop, temblor de cámara, efectos
-├── components/             Piezas reutilizables por CUALQUIER entidad
-│   ├── health_component.gd
-│   ├── hitbox_component.gd       (lo que pega)
-│   ├── hurtbox_component.gd      (lo que recibe)
-│   ├── hit_flash_component.gd
-│   └── neon_flicker_component.gd
-├── data/abilities.gd       Catálogo de habilidades (nombres y textos)
+├── autoloads/              game_state (guardado), event_bus (señales), game_feel (hit-stop, temblor, efectos)
+├── components/             health, hitbox, hurtbox, hit_flash, neon_flicker
+├── data/abilities.gd       Catálogo de poderes (nombres y textos)
 ├── entities/
-│   ├── player/             player.gd, sword_component.gd, knight_rig.tscn (partes + huesos)
-│   ├── enemies/
-│   │   ├── enemy.gd          clase base de todos los enemigos
-│   │   ├── beetle/           Escarabajo Chatarra
-│   │   ├── moth/             Polilla de Señal
-│   │   ├── tick/             Garrapata Torreta
-│   │   └── projectile/       bola de plasma (se puede devolver)
+│   ├── player/             player.gd (Ninfa y los sistemas del pacto), sword_component.gd (combo),
+│   │   │                   ninfa_frames.tres, player.tscn
+│   │   └── powers/         garra_infernal, afterimage (sombras del galope), flesh_chunk (trozos del jefe)
+│   ├── enemies/            enemy.gd (base: aturdido + devorar), beetle, moth, tick, projectile
 │   └── bosses/recolectora/ el jefe, su onda expansiva y la chatarra que cae
-├── fx/                     chispas, explosión de muerte, polvo (se borran solos)
-├── shaders/rim_light.gdshader   luz de borde + destello blanco al recibir daño
+├── fx/                     chispas, explosión, polvo, estallido al devorar
+├── shaders/                rim_light (borde de luz + destello), post_fx (look de pantalla)
 ├── world/
-│   ├── main/               escena raíz, fondo de ciudad, primer plano y lluvia
-│   ├── rooms/              room.gd (script base) + room_01..08.tscn
-│   └── objects/            puerta, nido, pickups, pinches, carteles, faroles,
-│                           vapor, atmósfera, barrera y arena de jefe
-├── ui/                     título, HUD y pausa
-├── assets/                 todo el arte HD (personaje, enemigos, tiles, fondo, props, fx, ui, fuentes)
-└── art_source/             concepto y hoja de partes originales (Godot no los importa)
+│   ├── main/               escena raíz, fondo, primer plano, lluvia
+│   ├── rooms/              room.gd + room_01..08.tscn
+│   └── objects/            puerta, charca (save_point), pickups, pinches, carteles, faroles, vapor, arena de jefe
+├── ui/                     título, intro, HUD, pausa
+├── assets/                 todo el arte (pixel art)
+└── art_source/             concepto, partes de Ninfa y herramientas (Godot no los importa)
 ```
 
 ## Arquitectura en 4 ideas
 
-### 1. Componentes (composición en vez de herencia)
+### 1. Componentes
 
-Cada responsabilidad es un nodo chico que se "enchufa". El jugador, los enemigos, el jefe y hasta el proyectil usan **los mismos** `HealthComponent`, `HurtboxComponent` y `HitboxComponent`: solo cambia la configuración en el Inspector. Por eso devolver una bola de plasma no necesitó código especial: el proyectil tiene una Hurtbox con 1 de vida, y la espada la rompe como a cualquier enemigo.
+Ninfa, los enemigos, el jefe, la Garra Infernal y hasta el proyectil enemigo usan **los mismos** `HealthComponent`, `HurtboxComponent` y `HitboxComponent`. Por eso devolver una bola de plasma o que la Garra atraviese enemigos no necesitó código especial.
 
 ```
-Player (CharacterBody2D)                 Beetle (CharacterBody2D, enemy.gd)
-├── KnightRig  (partes + huesos)         ├── Visual  (cuerpo + 3 patas animadas)
-├── CollisionShape2D                     ├── CollisionShape2D
-├── Camera2D                             ├── HealthComponent      (vida 3)
-├── HealthComponent       (vida 5+)      ├── HurtboxComponent     ← lo lastima la espada
-├── HurtboxComponent      ← enemigos     ├── HitboxComponent      → lastima al jugador
-├── Sword (SwordComponent)               └── FloorCheck (RayCast2D)  ← detecta bordes
-│   └── SwordHitbox (HitboxComponent)
-├── HealParticles
+Player (CharacterBody2D, player.gd)
+├── Sprite (AnimatedSprite2D, ninfa_frames.tres, shader rim_light)
+├── ArmGlow              brillo rojo del brazo
+├── CollisionShape2D
+├── Camera2D
+├── HealthComponent
+├── HurtboxComponent     ← lo que la lastima
+├── Sword (SwordComponent)
+│   └── SwordHitbox      ← katana / zarpazo (cambia daño y tamaño según el golpe)
+├── DashHitbox           ← quema lo que atraviesa el Galope
+├── DevourParticles
 └── DashTrail
 ```
 
-Los componentes se comunican **por señales**: la Hurtbox no sabe si su dueño es un jugador o un enemigo, solo avisa con `hit_received`.
-
 ### 2. Herencia corta para los enemigos
 
-`enemy.gd` (clase `Enemy`) resuelve lo común: unirse al grupo `enemies`, retroceso al recibir un golpe, destello, explosión al morir. Cada enemigo **solo escribe su comportamiento** sobrescribiendo `_ai(delta)`. Por eso el escarabajo entero tiene menos de 50 líneas.
+`enemy.gd` (clase `Enemy`) resuelve lo común: retroceso, destello, muerte, y **aturdido + devorar**. Cada enemigo solo escribe su comportamiento en `_ai(delta)`. Para que un enemigo nuevo se pueda devorar no hay que hacer nada; para que no (como el jefe), `can_be_devoured = false`.
 
-### 3. Autoloads: el estado vive fuera de las escenas
+### 3. Autoloads
 
-- **GameState** recuerda habilidades, objetos agarrados (`world_flags`), vida extra, salas visitadas y el último nido. Cuando volvés a una sala, se crea de cero y le pregunta a GameState qué mostrar. Por eso un pickup ya agarrado no reaparece y un jefe vencido no revive.
-- **EventBus** conecta escenas que no se conocen: el jefe emite `boss_health_changed` y el HUD lo escucha, sin que ninguno sepa que el otro existe.
-- **GameFeel** centraliza el "jugo": `GameFeel.hit_stop()`, `GameFeel.shake(fuerza, duración)` y `GameFeel.spawn_fx(escena, posición)`. Cualquier script puede usarlo.
+- **GameState**: habilidades, objetos agarrados, vida extra, salas visitadas, última charca, si ya viste la intro.
+- **EventBus**: une escenas que no se conocen (el jugador avisa Brasas, Hambre y vida; el HUD escucha).
+- **GameFeel**: `hit_stop()`, `shake()`, `spawn_fx()`.
 
 ### 4. Main persistente + salas intercambiables
 
 ```
-Main (Node2D)
-├── CityBackground   ← cielo, ciudad lejana, media, cercana y cables (Parallax2D)
-├── RoomContainer    ← acá se carga UNA sala a la vez
-├── Player           ← nunca se destruye: conserva vida y estado
-├── FX               ← chispas y explosiones (grupo "fx_layer")
-├── Foreground       ← siluetas en primer plano (parallax más rápido)
-├── Rain, HUD, PauseMenu (CanvasLayer)
-└── TransitionLayer/Fade   fundido a negro entre salas
+Main
+├── CityBackground, RoomContainer (una sala a la vez), Player, FX, Foreground
+├── Rain, PostFX, HUD, PauseMenu   (CanvasLayer)
+├── TransitionLayer/Fade
+└── Intro                          (solo en partida nueva; el mundo queda en pausa)
 ```
 
 ### Capas de física
 
-| # | Nombre | Quién está en ella | Qué detecta (máscara) |
+| # | Nombre | Quién | Detecta |
 |---|---|---|---|
 | 1 | world | tiles, pinches, barreras | — |
-| 2 | player | cuerpo del jugador | world |
+| 2 | player | cuerpo de Ninfa | world |
 | 3 | enemies | cuerpo de enemigos y jefe | world |
-| 4 | playerHurtbox | hurtbox del jugador | 7 enemyHitbox |
-| 5 | enemyHurtbox | hurtbox de enemigos y proyectiles | 6 playerHitbox |
-| 6 | playerHitbox | espada | — |
+| 4 | playerHurtbox | hurtbox de Ninfa | 7 |
+| 5 | enemyHurtbox | hurtbox de enemigos y proyectiles | 6 |
+| 6 | playerHitbox | katana, zarpazo, galope, garra | — |
 | 7 | enemyHitbox | enemigos, proyectiles, pinches | — |
-
-Puertas, pickups, nidos y el disparador de la arena son `Area2D` con máscara **2 (player)**.
 
 ---
 
 ## Guías rápidas
 
-### Medidas que hay que saber
+### Medidas
 
-- La pantalla del juego mide **480 × 270** y se escala ×3 a la ventana.
-- **1 tile = 16 unidades** de juego. Todo el arte está dibujado a **4×** (un tile es una imagen de 64 px) y se muestra a escala **0.25**. Así se ve nítido en pantallas grandes.
-- Ninguna sala puede ser **más angosta que 30 tiles ni más baja que 17**, o la cámara muestra lo que hay afuera.
-- Salto simple: ~3.5 tiles de alto. Doble salto: ~6. Doble salto + dash: ~13 de largo. Usen estos números para decidir qué habilidad pide cada obstáculo.
+- **1 tile = 16 unidades**. El arte del mundo está guardado a 4× (cada píxel es un bloque de 4×4) y se muestra a escala **0.25**: así las escenas no cambian, y en pantalla cada bloque es un píxel exacto.
+- Ninguna sala puede ser **más angosta que 30 tiles ni más baja que 17**.
+- Salto: ~3.5 tiles. Doble salto: ~6. Doble salto + galope: ~13 de largo.
 
-### Crear una sala nueva
+### Crear una sala
 
-La forma más fácil: **duplicar una sala existente** (clic derecho sobre `room_05.tscn` > Duplicar), borrar lo que no sirve y repintar.
+Lo más fácil: duplicar `room_05.tscn`. Desde cero: raíz `Node2D` con `room.gd`, hijos `Decor`, `Tiles` (TileMapLayer con `res://assets/tiles/tileset.tres`, **Scale 0.25**), `PlayerStart`, `Doors`, `Objects`, `Enemies`, y un `atmosphere.tscn` con su **Room Size**. Pintá con la pestaña **Terrains** (terreno *Concreto*).
 
-Desde cero:
+### Puertas
 
-1. **Escena > Nueva escena**, raíz `Node2D` (por ejemplo `Room09`). En **Script** cargá `res://world/rooms/room.gd` y completá **Room Name** (aparece en pantalla la primera vez que se entra).
-2. Agregale hijos con estos nombres exactos: `Decor`, `Tiles` (TileMapLayer), `PlayerStart` (Marker2D), `Doors`, `Objects` y `Enemies` (Node2D).
-3. Arrastrá `world/objects/atmosphere.tscn` como hijo y poné en **Room Size** el tamaño de la sala en unidades (ancho en tiles × 16, alto × 16).
-4. Seleccioná `Tiles`:
-   - **Tile Set**: `res://assets/tiles/tileset.tres`.
-   - **Transform > Scale**: `0.25, 0.25` ← **importante**: sin esto los tiles se ven 4 veces más grandes.
-   - **Texture > Filter**: Linear Mipmap.
-5. **Pintar con terrenos** (Godot elige solo los bordes correctos): en el panel **TileMap** de abajo, pestaña **Terrains**, elegí *Concreto* y pintá. Para las plataformas atravesables, en la pestaña **Tiles** usá la de la fila de abajo, a la izquierda.
+`door.tscn` en una abertura de 3 tiles. **Door Id**, **Target Room Path**, **Target Door Id** y **Spawn Offset** (`(32, 12)` en pared izquierda, `(-32, 12)` en la derecha). Siempre de a pares.
 
-### Conectar salas con puertas
-
-1. Dejá una abertura de 3 tiles de alto en la pared.
-2. Arrastrá `world/objects/door.tscn` adentro de `Doors` y ubicala en la abertura.
-3. En el Inspector:
-   - **Door Id**: único, por ejemplo `r09_izq`.
-   - **Target Room Path**: la sala destino.
-   - **Target Door Id**: el id de la puerta por la que vas a aparecer allá.
-   - **Spawn Offset**: dónde aparece el jugador al LLEGAR por esta puerta. Pared izquierda `(32, 12)`, pared derecha `(-32, 12)`. Tiene que quedar **afuera** del área de la puerta.
-4. Hacé lo mismo en la otra sala, apuntando de vuelta.
-
-> ⚠️ Las puertas van **de a pares**. Si falta la de vuelta, el jugador aparece en `PlayerStart` y la consola avisa.
-
-### Poner objetos
+### Objetos
 
 | Qué | Escena | Configurar |
 |---|---|---|
-| Habilidad | `world/objects/ability_pickup.tscn` | **Ability** y un **Pickup Id** único (`pickup_xxx`) |
-| +1 vida máxima | `world/objects/health_core.tscn` | **Pickup Id** único (`nucleo_xxx`) |
-| Nido de guardado | `world/objects/save_point.tscn` | **Save Id** único (`nido_xxx`). Va apoyado en el piso |
-| Pinches | `world/objects/spikes.tscn` | Uno por tile, sobre el piso |
-| Enemigos | `entities/enemies/*/*.tscn` | El escarabajo tiene **Start Direction** |
+| Poder | `ability_pickup.tscn` | **Ability** (`double_jump`, `dash`, `glide`, `garra`) y **Pickup Id** único |
+| +1 vida | `health_core.tscn` | **Pickup Id** único |
+| Charca | `save_point.tscn` | **Save Id** único; apoyada en el piso |
+| Pinches | `spikes.tscn` | uno por tile |
 
-### Arena de jefe
+### Ajustar el "game feel"
 
-Mirá `room_06.tscn`: un nodo `BossArena` (script `world/objects/boss_arena.gd`) con `Trigger` (Area2D donde empieza la pelea), `Gates` (barreras que cierran las salidas), `BossSpawn` y `RewardSpawn`. En el Inspector elegís la escena del jefe, el flag que recuerda que lo venciste, la recompensa y los límites de la arena.
-
-### Decorar
-
-Todo va adentro de `Decor`, que se dibuja detrás de los tiles.
-
-- `neon_sign.tscn` sirve para **cualquier imagen con halo**: cambiá **Sign Texture**, **Glow Color** (con alfa 0 no brilla) y **Flicker**. Se actualiza en el editor al instante. En `assets/props/` hay carteles (`sign_red`, `sign_teal`, `sign_orange`, `sign_white`, `sign_wide`), puesto de comida (`stall`), farolitos (`lanterns`), holograma, caños, cajas y barriles.
-- `street_lamp.tscn`: farol con cono de luz cálida.
-- `steam_vent.tscn`: vapor saliendo del piso.
-
-### Crear un enemigo nuevo
-
-1. Duplicá la carpeta `entities/enemies/beetle/` y renombrala.
-2. En el script dejá `extends Enemy` y reescribí solo `_ai(delta)`.
-3. Cambiá las imágenes de `Visual` y ajustá las formas de colisión.
-
-### Agregar una habilidad nueva
-
-1. Agregá la constante y sus textos en `data/abilities.gd`.
-2. Sumá el valor al `@export_enum` de `world/objects/ability_pickup.gd` (y de `boss_arena.gd` si puede ser recompensa).
-3. Usala en `player.gd` con `GameState.has_ability(Abilities.LA_NUEVA)`.
-
-### Ajustar cómo se siente
-
-Casi todo está en el Inspector del nodo `Player`, agrupado: velocidad, salto, gravedad, dash, planeo, combate y curación. Probá cambiar **Gravity** o **Jump Velocity** y jugá: es la mejor forma de entender el "game feel".
+En el Inspector del nodo `Player` están todos los números agrupados: movimiento, salto, Galope, combate (ventana del combo), Brasas (cuánto da cada golpe, cuánto cuesta la Garra, cuándo se apagan), Devorar (alcance) y Hambre (cada cuánto).
 
 ---
 
-## Arte
+## Pruebas
 
-### El personaje: animación por huesos ("cutout")
+El juego tiene un playtest automático que recorre las 8 salas y controla 115 cosas (incluye: pegar quieta no te mueve, correr y pegar a la vez, buffer del combo, HUD de Brasas) (combo, aturdir y devorar, Brasas, Hambre, charcas, Garra, Galope, jefe, guardado, muerte, pausa). No viene en el zip para no ensuciar el proyecto; si lo quieren, pídanlo.
 
-La Libélula está armada con partes dibujadas en alta resolución (generadas con IA a partir del concepto de `art_source/knight/`). Cada parte es una imagen suelta que cuelga de un "hueso" y gira sobre su articulación; las animaciones solo rotan huesos.
+## Próximos pasos
 
-Las proporciones son **compactas a lo Hollow Knight**: cabeza enorme, capa larga, piernas cortas. Las partes están aclaradas para leerse sobre la ciudad oscura, y el shader `rim_light` les agrega un borde de luz fría.
-
-```
-KnightRig (Node2D, cutout_rig.gd)
-├── Torso                ← hueso raíz (la cadera)
-│   ├── WingB, Cloak, Katana, WingA        (detrás del cuerpo)
-│   ├── ThighBack → ShinBack               (pierna de atrás, más oscura)
-│   ├── ArmBackUpper → ArmBackFore
-│   ├── Head
-│   ├── ThighFront → ShinFront
-│   └── ArmRobotUpper → ArmRobotFore → KatanaHand   (brazo de bronce)
-└── AnimationPlayer      ← idle, run, jump, fall, attack, attack_up,
-                           attack_down, dash, glide, hurt, heal
-```
-
-- **Cambiar una parte** (otro casco, por ejemplo): reemplacen el PNG en `assets/characters/knight/` manteniendo orientación y tamaño parecido.
-- **Retocar una animación**: abran `entities/player/knight_rig.tscn`, seleccionen `AnimationPlayer` y muevan las claves en el panel **Animación**.
-- `cutout_rig.gd` imita lo básico de un AnimatedSprite2D (`play`, `animation`, `flip_h`).
-
-### El mundo
-
-Todo en HD (4×) con la misma paleta:
-
-- **Fondo**: noche azul petróleo, niebla, y la Torre-colmena iluminada en ámbar.
-- **Escenario**: concreto oscuro casi negro con bordes de acero remachado. Lo jugable se lee por contraste.
-- **Luces**: rojo `#FF3C46`, turquesa `#28DCC8`, ámbar `#FFA028` y blanco cálido `#FFECE2`.
-- **Enemigos**: chatarra oxidada + carne de bicho + un punto de luz (ojo o núcleo) para que se vean de lejos.
-
-Fuentes: **Cinzel** (títulos) y **Rajdhani** (textos), ambas libres (licencias en `assets/fonts/`).
-
----
-
-## Próximos pasos sugeridos
-
-1. **Sonido**: es lo que más va a cambiar la sensación. Espadazo, golpe, salto, aterrizaje, curación, música ambiente con lluvia.
-2. **Mapa del juego** (pantalla con las salas visitadas: `GameState.visited_rooms` ya las guarda).
-3. **Segunda zona** con otra paleta (por ejemplo, el interior de la Torre) y su jefe.
-4. **Ataque cargado** o **salto en pared** como 4ª habilidad.
-5. **Más variantes** de enemigos reutilizando `Enemy`: escarabajo con escudo, polilla que dispara.
+1. **Sonido**: tajo, zarpazo, mordida al devorar, zumbido de la Estática, música.
+2. **Sellos de ceniza**: paredes que solo rompe la Garra Infernal (para esconder secretos).
+3. **Cadena del Pacto**: engancharse a anclas demoníacas (la recompensa que el lore le da a La Recolectora).
+4. **Ira y Forma del Diablo**: barra que se llena al recibir daño; llena, 8 segundos de forma demoníaca.
+5. **Recuerdos de la madre** (4 escondidos) para el final verdadero.
 
 ## Trabajo en equipo con Git
 
-- **`.godot/` nunca se sube** (ya está en `.gitignore`). Sí se suben los `.import` y los `.uid`: sin ellos se rompen las referencias.
-- **Una escena, un dueño a la vez.** Los conflictos de merge en `.tscn` son difíciles. Cada sala es su propio archivo: quien hace el mapa trabaja en `world/rooms/`, quien hace el jugador en `entities/player/`, quien hace enemigos en `entities/enemies/`.
-- **Ramas por feature**: `feature/sala-09`, `feature/wall-jump`, `fix/camara`. Se mergea a `main` con Pull Request y otra persona lo revisa.
-- **Antes de abrir Godot, `git pull`.** Antes de hacer push, probá el juego con F5.
-- **Commits chicos** con mensajes claros: `Agrega sala 9 con puerta a sala 5`.
+- **`.godot/` nunca se sube**. Sí se suben los `.import` y los `.uid`.
+- **Una escena, un dueño a la vez**: mapa en `world/rooms/`, Ninfa en `entities/player/`, enemigos en `entities/enemies/`.
+- **Ramas por feature** y Pull Request. **`git pull` antes de abrir Godot**, probar con F5 antes de hacer push.

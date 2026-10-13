@@ -6,8 +6,37 @@
 [ext_resource type="Script" path="res://ui/menu_button.gd" id="4_btn"]
 [ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="5_cinzel"]
 [ext_resource type="FontFile" path="res://assets/fonts/Rajdhani-Medium.ttf" id="6_rajdhani"]
+[ext_resource type="SpriteFrames" path="res://entities/player/ninfa_frames.tres" id="7_frames"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="8_glow"]
+[ext_resource type="Texture2D" path="res://assets/fx/ember_px.png" id="9_ember"]
+[ext_resource type="Shader" path="res://shaders/post_fx.gdshader" id="10_post"]
+[ext_resource type="Shader" path="res://shaders/rim_light.gdshader" id="11_rim"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_embers"]
+offsets = PackedFloat32Array(0, 0.15, 1)
+colors = PackedColorArray(1, 0.8, 0.4, 0, 1, 0.55, 0.2, 1, 0.8, 0.05, 0.05, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
+shader = ExtResource("10_post")
+shader_parameter/bloom_strength = 0.8
+shader_parameter/bloom_threshold = 0.4
+shader_parameter/aberration = 0.0025
+shader_parameter/vignette = 1.0
+shader_parameter/scanlines = 0.05
+shader_parameter/shadow_tint = Color(0.05, 0.1, 0.16, 1)
+shader_parameter/light_tint = Color(1, 0.93, 0.88, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rim"]
+shader = ExtResource("11_rim")
+shader_parameter/rim_color = Color(1, 0.35, 0.25, 0.9)
+shader_parameter/rim_width = 1.0
+shader_parameter/light_dir = Vector2(-0.4, -1)
+shader_parameter/flash = 0.0
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_title")
@@ -19,6 +48,64 @@ position = Vector2(240, 135)
 
 [node name="Rain" parent="." instance=ExtResource("3_rain")]
 
+[node name="Hero" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Aura" type="Sprite2D" parent="Hero"]
+modulate = Color(0.85, 0.08, 0.06, 0.55)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(372, 196)
+scale = Vector2(0.75, 0.9)
+texture = ExtResource("8_glow")
+
+[node name="Roof" type="Polygon2D" parent="Hero"]
+color = Color(0.03, 0.03, 0.05, 1)
+polygon = PackedVector2Array(290, 246, 480, 238, 480, 270, 280, 270)
+
+[node name="RoofEdge" type="Line2D" parent="Hero"]
+points = PackedVector2Array(290, 246, 480, 238)
+width = 1.0
+default_color = Color(0.35, 0.4, 0.5, 1)
+
+[node name="Ninfa" type="AnimatedSprite2D" parent="Hero"]
+material = SubResource("ShaderMaterial_rim")
+position = Vector2(372, 220)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("7_frames")
+animation = &"idle"
+autoplay = "idle"
+centered = false
+offset = Vector2(-70, -61)
+flip_h = true
+
+[node name="Embers" type="CPUParticles2D" parent="Hero"]
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(372, 196)
+amount = 26
+lifetime = 2.6
+preprocess = 2.0
+texture = ExtResource("9_ember")
+emission_shape = 3
+emission_rect_extents = Vector2(14, 10)
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(6, -10)
+initial_velocity_min = 10.0
+initial_velocity_max = 28.0
+color_ramp = SubResource("Gradient_embers")
+
+[node name="PostFX" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="Screen" type="ColorRect" parent="PostFX"]
+material = SubResource("ShaderMaterial_post")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 5
 
@@ -29,17 +116,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.35)
+color = Color(0, 0, 0, 0.0)
 
 [node name="Logo" type="VBoxContainer" parent="UI"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -160.0
-offset_top = 40.0
-offset_right = 160.0
-offset_bottom = 120.0
-grow_horizontal = 2
+offset_left = 26.0
+offset_top = 44.0
+offset_right = 266.0
+offset_bottom = 124.0
 
 [node name="Title" type="Label" parent="UI/Logo"]
 layout_mode = 2
@@ -49,27 +132,24 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("5_cinzel")
 theme_override_font_sizes/font_size = 48
 text = "ODÓN"
-horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="UI/Logo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.75, 0.45, 1)
-theme_override_fonts/font = ExtResource("6_rajdhani")
-theme_override_font_sizes/font_size = 12
-text = "La ciudad-colmena"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.38, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_cinzel")
+theme_override_font_sizes/font_size = 13
+text = "El Caballito del Diablo"
 
 [node name="Box" type="VBoxContainer" parent="UI"]
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -80.0
-offset_top = -100.0
-offset_right = 80.0
-offset_bottom = -20.0
-grow_horizontal = 2
+offset_left = 30.0
+offset_top = -110.0
+offset_right = 190.0
+offset_bottom = -30.0
 grow_vertical = 0
 theme_override_constants/separation = 2
 
@@ -82,6 +162,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
 text = "Continuar"
+alignment = 0
 script = ExtResource("4_btn")
 
 [node name="New" type="Button" parent="UI/Box"]
@@ -93,6 +174,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
 text = "Nueva partida"
+alignment = 0
 script = ExtResource("4_btn")
 
 [node name="Quit" type="Button" parent="UI/Box"]
@@ -104,4 +186,5 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_btn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn")
 text = "Salir"
+alignment = 0
 script = ExtResource("4_btn")

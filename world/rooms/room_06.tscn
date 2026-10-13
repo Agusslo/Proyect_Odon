@@ -18,111 +18,111 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7inx"]
 size = Vector2(288, 192)
 
-[node name="Room06" type="Node2D" unique_id=162325127]
+[node name="Room06" type="Node2D" unique_id=363647620]
 script = ExtResource("1_2wnqw")
 room_name = "Fosa de Chatarra"
 
-[node name="Decor" type="Node2D" parent="." unique_id=1954548694]
+[node name="Decor" type="Node2D" parent="." unique_id=899863819]
 
-[node name="Lanterns1" parent="Decor" unique_id=1444519990 instance=ExtResource("2_lrx5u")]
+[node name="Lanterns1" parent="Decor" unique_id=334508812 instance=ExtResource("2_lrx5u")]
 position = Vector2(232, 40)
 sign_texture = ExtResource("3_54fuf")
 glow_color = Color(1, 0.3, 0.25, 0.4)
 flicker = false
 
-[node name="SignRed1" parent="Decor" unique_id=1961956987 instance=ExtResource("2_lrx5u")]
+[node name="SignRed1" parent="Decor" unique_id=1674072646 instance=ExtResource("2_lrx5u")]
 position = Vector2(136, 88)
 
-[node name="SignOrange1" parent="Decor" unique_id=908488171 instance=ExtResource("2_lrx5u")]
+[node name="SignOrange1" parent="Decor" unique_id=2023850124 instance=ExtResource("2_lrx5u")]
 position = Vector2(360, 88)
 sign_texture = ExtResource("4_bvrml")
 glow_color = Color(1, 0.6, 0.15, 0.55)
 
-[node name="Pipes1" parent="Decor" unique_id=881204907 instance=ExtResource("2_lrx5u")]
+[node name="Pipes1" parent="Decor" unique_id=897020709 instance=ExtResource("2_lrx5u")]
 position = Vector2(56, 104)
 sign_texture = ExtResource("5_5ir3v")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="Pipes2" parent="Decor" unique_id=235409880 instance=ExtResource("2_lrx5u")]
+[node name="Pipes2" parent="Decor" unique_id=1276530714 instance=ExtResource("2_lrx5u")]
 position = Vector2(424, 104)
 sign_texture = ExtResource("5_5ir3v")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="Barrel1" parent="Decor" unique_id=297986973 instance=ExtResource("2_lrx5u")]
+[node name="Barrel1" parent="Decor" unique_id=988602785 instance=ExtResource("2_lrx5u")]
 position = Vector2(72, 232)
 sign_texture = ExtResource("6_0xtk5")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="Crate1" parent="Decor" unique_id=2057023298 instance=ExtResource("2_lrx5u")]
+[node name="Crate1" parent="Decor" unique_id=1207399324 instance=ExtResource("2_lrx5u")]
 position = Vector2(88, 232)
 sign_texture = ExtResource("7_flrpq")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="SteamVent1" parent="Decor" unique_id=319142196 instance=ExtResource("8_1qt7r")]
+[node name="SteamVent1" parent="Decor" unique_id=408463861 instance=ExtResource("8_1qt7r")]
 position = Vector2(248, 240)
 
-[node name="Crate2" parent="Decor" unique_id=127723261 instance=ExtResource("2_lrx5u")]
+[node name="Crate2" parent="Decor" unique_id=1138133494 instance=ExtResource("2_lrx5u")]
 position = Vector2(408, 232)
 sign_texture = ExtResource("7_flrpq")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="Atmosphere" parent="." unique_id=1309646258 instance=ExtResource("9_cb5mb")]
+[node name="Atmosphere" parent="." unique_id=979310318 instance=ExtResource("9_cb5mb")]
 
-[node name="Tiles" type="TileMapLayer" parent="." unique_id=1683013118]
-texture_filter = 4
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1485881110]
+texture_filter = 1
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AAAAAAAAAAADAAMAAAABAAAAAAADAAMAAAACAAAAAAADAAIAAAADAAAAAAADAAIAAAAEAAAAAAADAAIAAAAFAAAAAAADAAIAAAAGAAAAAAADAAIAAAAHAAAAAAADAAIAAAAIAAAAAAADAAIAAAAJAAAAAAADAAIAAAAKAAAAAAADAAIAAAALAAAAAAADAAIAAAAMAAAAAAADAAIAAAANAAAAAAADAAIAAAAOAAAAAAADAAIAAAAPAAAAAAADAAIAAAAQAAAAAAADAAIAAAARAAAAAAADAAIAAAASAAAAAAADAAIAAAATAAAAAAADAAIAAAAUAAAAAAADAAIAAAAVAAAAAAADAAIAAAAWAAAAAAADAAIAAAAXAAAAAAADAAIAAAAYAAAAAAADAAIAAAAZAAAAAAADAAIAAAAaAAAAAAADAAIAAAAbAAAAAAADAAIAAAAcAAAAAAADAAMAAAAdAAAAAAADAAMAAAAAAAEAAAADAAMAAAABAAEAAAABAAMAAAAcAAEAAAADAAEAAAAdAAEAAAADAAMAAAAAAAIAAAADAAMAAAABAAIAAAABAAMAAAAcAAIAAAADAAEAAAAdAAIAAAADAAMAAAAAAAMAAAADAAMAAAABAAMAAAABAAMAAAAcAAMAAAADAAEAAAAdAAMAAAADAAMAAAAAAAQAAAADAAMAAAABAAQAAAABAAMAAAAcAAQAAAADAAEAAAAdAAQAAAADAAMAAAAAAAUAAAACAAQAAAABAAUAAAABAAMAAAAcAAUAAAADAAEAAAAdAAUAAAADAAMAAAAAAAYAAAABAAQAAAABAAYAAAABAAMAAAAcAAYAAAADAAEAAAAdAAYAAAACAAQAAAAAAAcAAAADAAMAAAABAAcAAAABAAMAAAAcAAcAAAADAAEAAAAdAAcAAAADAAMAAAAAAAgAAAACAAQAAAABAAgAAAABAAMAAAAcAAgAAAADAAEAAAAdAAgAAAADAAMAAAAAAAkAAAADAAMAAAABAAkAAAABAAMAAAAcAAkAAAADAAEAAAAdAAkAAAADAAMAAAAAAAoAAAADAAMAAAABAAoAAAABAAMAAAAcAAoAAAADAAEAAAAdAAoAAAADAAMAAAAAAAsAAAADAAIAAAABAAsAAAABAAIAAAAcAAsAAAADAAAAAAAdAAsAAAADAAIAAAAAAA8AAAACAAMAAAABAA8AAAACAAMAAAACAA8AAAACAAMAAAADAA8AAAACAAMAAAAEAA8AAAACAAMAAAAFAA8AAAACAAMAAAAGAA8AAAACAAMAAAAHAA8AAAACAAMAAAAIAA8AAAACAAMAAAAJAA8AAAACAAMAAAAKAA8AAAACAAMAAAALAA8AAAACAAMAAAAMAA8AAAACAAMAAAANAA8AAAACAAMAAAAOAA8AAAACAAMAAAAPAA8AAAACAAMAAAAQAA8AAAACAAMAAAARAA8AAAACAAMAAAASAA8AAAACAAMAAAATAA8AAAACAAMAAAAUAA8AAAACAAMAAAAVAA8AAAACAAMAAAAWAA8AAAACAAMAAAAXAA8AAAACAAMAAAAYAA8AAAACAAMAAAAZAA8AAAACAAMAAAAaAA8AAAACAAMAAAAbAA8AAAACAAMAAAAcAA8AAAACAAMAAAAdAA8AAAACAAMAAAAAABAAAAADAAMAAAABABAAAAABAAQAAAACABAAAAADAAMAAAADABAAAAADAAMAAAAEABAAAAADAAMAAAAFABAAAAADAAMAAAAGABAAAAABAAQAAAAHABAAAAADAAMAAAAIABAAAAADAAMAAAAJABAAAAADAAMAAAAKABAAAAADAAMAAAALABAAAAADAAMAAAAMABAAAAADAAMAAAANABAAAAADAAMAAAAOABAAAAADAAMAAAAPABAAAAADAAMAAAAQABAAAAADAAMAAAARABAAAAADAAMAAAASABAAAAADAAMAAAATABAAAAADAAMAAAAUABAAAAADAAMAAAAVABAAAAADAAMAAAAWABAAAAADAAMAAAAXABAAAAACAAQAAAAYABAAAAADAAMAAAAZABAAAAACAAQAAAAaABAAAAADAAMAAAAbABAAAAADAAMAAAAcABAAAAADAAMAAAAdABAAAAADAAMAAAA=")
 tile_set = ExtResource("10_aw8tg")
 
-[node name="PlayerStart" type="Marker2D" parent="." unique_id=482334283]
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=1345083996]
 position = Vector2(40, 228)
 
-[node name="Doors" type="Node2D" parent="." unique_id=137698893]
+[node name="Doors" type="Node2D" parent="." unique_id=1308772805]
 
-[node name="Door_r06_izq" parent="Doors" unique_id=1719528687 instance=ExtResource("11_42c21")]
+[node name="Door_r06_izq" parent="Doors" unique_id=792477169 instance=ExtResource("11_42c21")]
 position = Vector2(8, 216)
 door_id = "r06_izq"
 target_room_path = "res://world/rooms/room_05.tscn"
 target_door_id = "r05_der"
 
-[node name="Door_r06_der" parent="Doors" unique_id=1993311089 instance=ExtResource("11_42c21")]
+[node name="Door_r06_der" parent="Doors" unique_id=1456972897 instance=ExtResource("11_42c21")]
 position = Vector2(472, 216)
 door_id = "r06_der"
 target_room_path = "res://world/rooms/room_07.tscn"
 target_door_id = "r07_izq"
 spawn_offset = Vector2(-32, 12)
 
-[node name="Objects" type="Node2D" parent="." unique_id=1159798028]
+[node name="Objects" type="Node2D" parent="." unique_id=1464193232]
 
-[node name="Enemies" type="Node2D" parent="." unique_id=525629755]
+[node name="Enemies" type="Node2D" parent="." unique_id=1747472041]
 
-[node name="BossArena" type="Node2D" parent="." unique_id=1975660387]
+[node name="BossArena" type="Node2D" parent="." unique_id=1953392711]
 script = ExtResource("12_ab10t")
 boss_scene = ExtResource("13_xsf8f")
 
-[node name="Trigger" type="Area2D" parent="BossArena" unique_id=248513926]
+[node name="Trigger" type="Area2D" parent="BossArena" unique_id=497867032]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/Trigger" unique_id=1339390551]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/Trigger" unique_id=1917157934]
 position = Vector2(240, 144)
 shape = SubResource("RectangleShape2D_x7inx")
 
-[node name="Gates" type="Node2D" parent="BossArena" unique_id=1989097680]
+[node name="Gates" type="Node2D" parent="BossArena" unique_id=1479949377]
 
-[node name="Barrier1" parent="BossArena/Gates" unique_id=258959512 instance=ExtResource("14_lyka0")]
+[node name="Barrier1" parent="BossArena/Gates" unique_id=568687361 instance=ExtResource("14_lyka0")]
 position = Vector2(40, 216)
 
-[node name="Barrier2" parent="BossArena/Gates" unique_id=181351855 instance=ExtResource("14_lyka0")]
+[node name="Barrier2" parent="BossArena/Gates" unique_id=1833094333 instance=ExtResource("14_lyka0")]
 position = Vector2(440, 216)
 
-[node name="BossSpawn" type="Marker2D" parent="BossArena" unique_id=166497446]
+[node name="BossSpawn" type="Marker2D" parent="BossArena" unique_id=1418757922]
 position = Vector2(328, 240)
 
-[node name="RewardSpawn" type="Marker2D" parent="BossArena" unique_id=1795840452]
+[node name="RewardSpawn" type="Marker2D" parent="BossArena" unique_id=1685724702]
 position = Vector2(248, 192)

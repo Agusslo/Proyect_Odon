@@ -13,20 +13,25 @@ class_name Abilities
 const DOUBLE_JUMP: StringName = &"double_jump"
 const DASH: StringName = &"dash"
 const GLIDE: StringName = &"glide"
+const GARRA: StringName = &"garra"
 
 ## Textos que se muestran al obtener cada habilidad.
 const INFO := {
 	DOUBLE_JUMP: {
-		"name": "Alas de Libélula",
-		"hint": "Presioná Saltar en el aire para aletear otra vez.",
+		"name": "Alas de Ceniza",
+		"hint": "Tus alas rotas arden un instante: presioná Saltar en el aire.",
 	},
 	DASH: {
-		"name": "Impulso Sináptico",
-		"hint": "Presioná Dash (K / Shift) para lanzarte hacia adelante.",
+		"name": "Galope del Diablo",
+		"hint": "Dash (K / Shift): te volvés sombra, atravesás enemigos y los quemás.",
 	},
 	GLIDE: {
-		"name": "Planeo Nocturno",
-		"hint": "Mantené Saltar mientras caés para planear.",
+		"name": "Planeo de Brasas",
+		"hint": "Mantené Saltar mientras caés: el calor del brazo te sostiene.",
+	},
+	GARRA: {
+		"name": "Garra Infernal",
+		"hint": "Garra (I / V): lanzás fuego a distancia. Cuesta un tercio de las Brasas.",
 	},
 }
 

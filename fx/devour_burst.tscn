@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://fx/one_shot_fx.gd" id="1_fx"]
+[ext_resource type="Texture2D" path="res://assets/fx/glow.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/fx/ember_px.png" id="3_ember"]
+[ext_resource type="Texture2D" path="res://assets/fx/chunk_px.png" id="4_chunk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_embers"]
+colors = PackedColorArray(1, 0.85, 0.5, 1, 0.9, 0.1, 0.05, 0)
+
+[sub_resource type="Gradient" id="Gradient_bits"]
+offsets = PackedFloat32Array(0, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="DevourBurst" type="Node2D" node_paths=PackedStringArray("flash_sprite")]
+z_index = 30
+script = ExtResource("1_fx")
+lifetime = 1.0
+flash_sprite = NodePath("Flash")
+
+[node name="Flash" type="Sprite2D" parent="."]
+modulate = Color(1, 0.2, 0.12, 1)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_glow")
+
+[node name="Embers" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 30
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.9
+texture = ExtResource("3_ember")
+spread = 180.0
+gravity = Vector2(0, -60)
+initial_velocity_min = 40.0
+initial_velocity_max = 150.0
+damping_min = 60.0
+damping_max = 120.0
+color_ramp = SubResource("Gradient_embers")
+
+[node name="Bits" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("4_chunk")
+direction = Vector2(0, -1)
+spread = 80.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 70.0
+initial_velocity_max = 150.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+scale_amount_min = 0.5
+scale_amount_max = 0.8
+color_ramp = SubResource("Gradient_bits")

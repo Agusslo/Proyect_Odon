@@ -1,9 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_hud"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_under.png" id="2_under"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_fill.png" id="3_fill"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud_vial_frame.png" id="4_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud_portrait.png" id="2_portrait"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud_plate.png" id="9_plate"]
+[ext_resource type="Texture2D" path="res://assets/ui/brasa_under.png" id="3_bunder"]
+[ext_resource type="Texture2D" path="res://assets/ui/brasa_fill.png" id="4_bfill"]
 [ext_resource type="Texture2D" path="res://assets/ui/boss_bar_under.png" id="5_bunder"]
 [ext_resource type="Texture2D" path="res://assets/ui/boss_bar_fill.png" id="6_bfill"]
 [ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="7_cinzel"]
@@ -22,35 +23,79 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.7, 0.05, 0.05, 0)
 
-[node name="Energy" type="TextureProgressBar" parent="."]
-texture_filter = 4
-offset_left = 6.0
+[node name="Panel" type="Control" parent="."]
+layout_mode = 3
+offset_left = 5.0
 offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+mouse_filter = 2
+
+[node name="Plate" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = -3.0
+offset_right = 132.0
+offset_bottom = 37.0
+mouse_filter = 2
+texture = ExtResource("9_plate")
+
+[node name="Portrait" type="TextureRect" parent="Panel"]
+layout_mode = 0
 offset_right = 34.0
-offset_bottom = 33.0
-max_value = 99.0
-fill_mode = 3
-nine_patch_stretch = true
-texture_under = ExtResource("2_under")
-texture_progress = ExtResource("3_fill")
+offset_bottom = 34.0
+pivot_offset = Vector2(17, 17)
+texture = ExtResource("2_portrait")
 
-[node name="Frame" type="TextureRect" parent="Energy"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_frame")
-expand_mode = 1
-
-[node name="HealthBar" type="HBoxContainer" parent="."]
-texture_filter = 4
-offset_left = 38.0
-offset_top = 10.0
-offset_right = 200.0
-offset_bottom = 24.0
+[node name="HealthBar" type="HBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 4.0
+offset_right = 140.0
+offset_bottom = 17.0
 theme_override_constants/separation = 1
+
+[node name="Brasas" type="HBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 19.0
+offset_right = 115.0
+offset_bottom = 27.0
+theme_override_constants/separation = 2
+
+[node name="Seg1" type="TextureProgressBar" parent="Panel/Brasas"]
+custom_minimum_size = Vector2(24, 7)
+layout_mode = 2
+max_value = 33.0
+texture_under = ExtResource("3_bunder")
+texture_progress = ExtResource("4_bfill")
+
+[node name="Seg2" type="TextureProgressBar" parent="Panel/Brasas"]
+custom_minimum_size = Vector2(24, 7)
+layout_mode = 2
+max_value = 33.0
+texture_under = ExtResource("3_bunder")
+texture_progress = ExtResource("4_bfill")
+
+[node name="Seg3" type="TextureProgressBar" parent="Panel/Brasas"]
+custom_minimum_size = Vector2(24, 7)
+layout_mode = 2
+max_value = 33.0
+texture_under = ExtResource("3_bunder")
+texture_progress = ExtResource("4_bfill")
+
+[node name="HungerLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 26.0
+offset_right = 120.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(1, 0.3, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("8_rajdhani")
+theme_override_font_sizes/font_size = 9
+text = "HAMBRE"
 
 [node name="AreaTitle" type="VBoxContainer" parent="."]
 anchors_preset = 5
@@ -129,7 +174,6 @@ text = "Jefe"
 horizontal_alignment = 1
 
 [node name="Bar" type="TextureProgressBar" parent="BossBar"]
-texture_filter = 4
 custom_minimum_size = Vector2(300, 10)
 layout_mode = 2
 value = 100.0

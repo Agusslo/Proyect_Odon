@@ -16,6 +16,11 @@ const ART_SCALE := 0.25
 	set(value):
 		glow_color = value
 		_apply()
+## Color del propio cartel (para teñir los carteles blancos de magenta, violeta...).
+@export var sign_tint: Color = Color.WHITE:
+	set(value):
+		sign_tint = value
+		_apply()
 ## Si titila de vez en cuando (carteles viejos).
 @export var flicker: bool = true:
 	set(value):
@@ -34,6 +39,7 @@ func _apply() -> void:
 	var glow := $Glow as Sprite2D
 	sign_sprite.texture = sign_texture
 	sign_sprite.scale = Vector2.ONE * ART_SCALE
+	sign_sprite.modulate = sign_tint
 	glow.modulate = glow_color
 	glow.visible = glow_color.a > 0.01
 	if sign_texture:

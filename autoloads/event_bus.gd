@@ -46,3 +46,7 @@ signal boss_health_changed(current: int, max_value: int)
 ## El jefe fue derrotado (o la pelea se interrumpió): el HUD oculta la barra.
 @warning_ignore("unused_signal")
 signal boss_ended(defeated: bool)
+@warning_ignore("unused_signal")
+signal player_hunger_changed(hungry: bool, ratio: float)
+@warning_ignore("unused_signal")
+signal brasas_insufficient

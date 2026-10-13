@@ -9,6 +9,10 @@ extends Node2D
 ## Desmarcar en el Inspector para empezar siempre de cero mientras prueban cosas.
 @export var load_save_on_start: bool = true
 @export var fade_time: float = 0.25
+## Muestra la intro de la historia al empezar una partida nueva (una sola vez).
+@export var play_intro: bool = true
+
+const INTRO := preload("res://ui/intro.tscn")
 
 @onready var room_container: Node2D = $RoomContainer
 @onready var player: Player = $Player
@@ -25,15 +29,38 @@ func _ready() -> void:
 
 	var room_path := starting_room_path
 	var spawn_id := ""
+	var is_new_game := true
 	if load_save_on_start and GameState.load_game() and GameState.respawn_room_path != "":
 		room_path = GameState.respawn_room_path
 		spawn_id = GameState.respawn_spawn_id
+		is_new_game = false
 	else:
 		GameState.reset()
 
 	_load_room(room_path, spawn_id)
 	fade.color.a = 1.0
-	_fade_to(0.0)
+	if is_new_game and play_intro and not GameState.get_flag("intro_vista"):
+		GameState.set_flag("intro_vista")
+		var intro := INTRO.instantiate()
+		add_child(intro)
+		fade.color.a = 0.0
+		get_tree().paused = true
+		await intro.finished
+		get_tree().paused = false
+		EventBus.message_requested.emit("J: atacar (el 3er golpe es el Zarpazo)   ·   Espacio: saltar   ·   L: devorar\nI: Garra Infernal (gasta Brasas)   ·   E: sumergirse en las charcas", 6.0)
+	else:
+		_fade_to(0.0)
+
+
+# --- Atajo de prueba ---------------------------------------------------------
+
+## F1: desbloquea todos los poderes y llena las Brasas (para probar sin recorrer el mapa).
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
+		for ability in [Abilities.DOUBLE_JUMP, Abilities.DASH, Abilities.GLIDE]:
+			GameState.unlock_ability(ability)
+		player._set_energy(player.brasas_max)
+		EventBus.message_requested.emit("[Prueba] Todos los poderes desbloqueados y Brasas llenas.", 2.5)
 
 
 # --- Cambio de sala ----------------------------------------------------------

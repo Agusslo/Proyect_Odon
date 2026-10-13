@@ -1,7 +1,8 @@
 class_name SavePoint
 extends Area2D
-## Nido de recarga: el jugador se para enfrente, presiona Interactuar (E) y
-## recupera toda la vida + guarda la partida + queda como punto de reaparición.
+## CHARCA: los últimos charcos del viejo pantano. Ninfa se sumerge como cuando era ninfa:
+## recupera toda la vida, se le calma el Hambre, se guarda la partida y queda
+## como punto de reaparición. Se usa parándose encima y apretando Interactuar (E).
 
 @export var save_id: String = ""
 
@@ -33,9 +34,10 @@ func get_spawn_position() -> Vector2:
 
 func _rest() -> void:
 	_player.health.reset_health()
+	_player.rest()
 	GameState.set_respawn_point(GameState.current_room_path, save_id)
 	if GameState.save_game():
-		EventBus.message_requested.emit("Descansaste en el nido. Partida guardada.", 2.0)
+		EventBus.message_requested.emit("Te sumergiste en la charca. Partida guardada.", 2.0)
 
 
 func _on_body_entered(body: Node2D) -> void:

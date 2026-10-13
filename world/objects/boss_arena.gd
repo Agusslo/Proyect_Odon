@@ -8,7 +8,7 @@ const ABILITY_PICKUP := preload("res://world/objects/ability_pickup.tscn")
 
 @export var boss_scene: PackedScene
 @export var boss_flag: String = "boss_recolectora"
-@export_enum("double_jump", "dash", "glide") var reward_ability: String = "glide"
+@export_enum("double_jump", "dash", "glide", "garra") var reward_ability: String = "glide"
 @export var reward_pickup_id: String = "pickup_planeo"
 ## Límites para los ataques del jefe (en coordenadas de la sala).
 @export var arena_left: float = 32.0

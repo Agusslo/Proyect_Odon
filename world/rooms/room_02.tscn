@@ -19,124 +19,125 @@
 [ext_resource type="PackedScene" path="res://entities/enemies/moth/moth.tscn" id="17_bg367"]
 [ext_resource type="PackedScene" path="res://entities/enemies/beetle/beetle.tscn" id="18_gbg5x"]
 
-[node name="Room02" type="Node2D" unique_id=341762632]
+[node name="Room02" type="Node2D" unique_id=1342761369]
 script = ExtResource("1_135wp")
 room_name = "Mercado de Neón"
 
-[node name="Decor" type="Node2D" parent="." unique_id=163046487]
+[node name="Decor" type="Node2D" parent="." unique_id=1200179120]
 
-[node name="Lanterns1" parent="Decor" unique_id=597101896 instance=ExtResource("2_efocp")]
+[node name="Lanterns1" parent="Decor" unique_id=422992209 instance=ExtResource("2_efocp")]
 position = Vector2(296, 40)
 sign_texture = ExtResource("3_ex8u2")
 glow_color = Color(1, 0.3, 0.25, 0.4)
 flicker = false
 
-[node name="Lanterns2" parent="Decor" unique_id=29491612 instance=ExtResource("2_efocp")]
+[node name="Lanterns2" parent="Decor" unique_id=714495232 instance=ExtResource("2_efocp")]
 position = Vector2(760, 40)
 sign_texture = ExtResource("3_ex8u2")
 glow_color = Color(1, 0.3, 0.25, 0.4)
 flicker = false
 
-[node name="SignTeal1" parent="Decor" unique_id=233450961 instance=ExtResource("2_efocp")]
+[node name="SignTeal1" parent="Decor" unique_id=611341001 instance=ExtResource("2_efocp")]
 position = Vector2(648, 56)
 sign_texture = ExtResource("4_44eum")
 glow_color = Color(0.15, 0.9, 0.8, 0.55)
 
-[node name="SignWide1" parent="Decor" unique_id=1219922320 instance=ExtResource("2_efocp")]
+[node name="SignWide1" parent="Decor" unique_id=1563011636 instance=ExtResource("2_efocp")]
 position = Vector2(504, 72)
 sign_texture = ExtResource("5_8imbn")
 glow_color = Color(1, 0.25, 0.28, 0.5)
 
-[node name="SignWhite1" parent="Decor" unique_id=1315053697 instance=ExtResource("2_efocp")]
+[node name="SignWhite1" parent="Decor" unique_id=382806857 instance=ExtResource("2_efocp")]
 position = Vector2(392, 88)
 sign_texture = ExtResource("6_rw3de")
-glow_color = Color(1, 0.92, 0.88, 0.45)
+glow_color = Color(1, 0.2, 0.85, 0.55)
+sign_tint = Color(1, 0.45, 0.95, 1)
 
-[node name="SignOrange1" parent="Decor" unique_id=1668620452 instance=ExtResource("2_efocp")]
+[node name="SignOrange1" parent="Decor" unique_id=278001586 instance=ExtResource("2_efocp")]
 position = Vector2(200, 120)
 sign_texture = ExtResource("7_ntt10")
 glow_color = Color(1, 0.6, 0.15, 0.55)
 
-[node name="Stall1" parent="Decor" unique_id=1536885587 instance=ExtResource("2_efocp")]
+[node name="Stall1" parent="Decor" unique_id=2029855022 instance=ExtResource("2_efocp")]
 position = Vector2(152, 210)
 sign_texture = ExtResource("8_xj3l1")
 glow_color = Color(1, 0.6, 0.25, 0.35)
 flicker = false
 
-[node name="StreetLamp1" parent="Decor" unique_id=1085653843 instance=ExtResource("9_475f2")]
+[node name="StreetLamp1" parent="Decor" unique_id=1643891951 instance=ExtResource("9_475f2")]
 position = Vector2(280, 240)
 
-[node name="Crate1" parent="Decor" unique_id=748319573 instance=ExtResource("2_efocp")]
+[node name="Crate1" parent="Decor" unique_id=144274657 instance=ExtResource("2_efocp")]
 position = Vector2(456, 232)
 sign_texture = ExtResource("10_40ibf")
 glow_color = Color(0, 0, 0, 0)
 flicker = false
 
-[node name="SteamVent1" parent="Decor" unique_id=1360526795 instance=ExtResource("11_e88d4")]
+[node name="SteamVent1" parent="Decor" unique_id=1932283061 instance=ExtResource("11_e88d4")]
 position = Vector2(584, 240)
 
-[node name="Stall2" parent="Decor" unique_id=422440576 instance=ExtResource("2_efocp")]
+[node name="Stall2" parent="Decor" unique_id=297197016 instance=ExtResource("2_efocp")]
 position = Vector2(632, 210)
 sign_texture = ExtResource("8_xj3l1")
 glow_color = Color(1, 0.6, 0.25, 0.35)
 flicker = false
 
-[node name="StreetLamp2" parent="Decor" unique_id=1806026703 instance=ExtResource("9_475f2")]
+[node name="StreetLamp2" parent="Decor" unique_id=464338389 instance=ExtResource("9_475f2")]
 position = Vector2(776, 240)
 
-[node name="Atmosphere" parent="." unique_id=2125222392 instance=ExtResource("12_amf5b")]
+[node name="Atmosphere" parent="." unique_id=1719750544 instance=ExtResource("12_amf5b")]
 room_size = Vector2(960, 272)
 
-[node name="Tiles" type="TileMapLayer" parent="." unique_id=1007015922]
-texture_filter = 4
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1101787865]
+texture_filter = 1
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("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AAASAA8AAAACAAMAAAATAA8AAAACAAMAAAAUAA8AAAADAAMAAAAVAA8AAAADAAMAAAAWAA8AAAADAAMAAAAXAA8AAAADAAMAAAAYAA8AAAADAAMAAAAZAA8AAAADAAMAAAAaAA8AAAADAAMAAAAbAA8AAAADAAMAAAAcAA8AAAACAAMAAAAdAA8AAAACAAMAAAAeAA8AAAACAAMAAAAfAA8AAAACAAMAAAAgAA8AAAACAAMAAAAhAA8AAAACAAMAAAAiAA8AAAACAAMAAAAjAA8AAAACAAMAAAAkAA8AAAACAAMAAAAlAA8AAAACAAMAAAAmAA8AAAACAAMAAAAnAA8AAAACAAMAAAAoAA8AAAACAAMAAAApAA8AAAACAAMAAAAqAA8AAAACAAMAAAArAA8AAAACAAMAAAAsAA8AAAACAAMAAAAtAA8AAAACAAMAAAAuAA8AAAACAAMAAAAvAA8AAAACAAMAAAAwAA8AAAACAAMAAAAxAA8AAAACAAMAAAAyAA8AAAACAAMAAAAzAA8AAAACAAMAAAA0AA8AAAACAAMAAAA1AA8AAAACAAMAAAA2AA8AAAACAAMAAAA3AA8AAAACAAMAAAA4AA8AAAACAAMAAAA5AA8AAAACAAMAAAA6AA8AAAACAAMAAAA7AA8AAAACAAMAAAAAABAAAAACAAQAAAABABAAAAADAAMAAAACABAAAAADAAMAAAADABAAAAADAAMAAAAEABAAAAADAAMAAAAFABAAAAADAAMAAAAGABAAAAADAAMAAAAHABAAAAADAAMAAAAIABAAAAABAAQAAAAJABAAAAADAAMAAAAKABAAAAADAAMAAAALABAAAAABAAQAAAAMABAAAAADAAMAAAANABAAAAADAAMAAAAOABAAAAADAAMAAAAPABAAAAADAAMAAAAQABAAAAADAAMAAAARABAAAAADAAMAAAASABAAAAADAAMAAAATABAAAAADAAMAAAAUABAAAAADAAMAAAAVABAAAAADAAMAAAAWABAAAAABAAQAAAAXABAAAAADAAMAAAAYABAAAAADAAMAAAAZABAAAAADAAMAAAAaABAAAAADAAMAAAAbABAAAAADAAMAAAAcABAAAAADAAMAAAAdABAAAAADAAMAAAAeABAAAAADAAMAAAAfABAAAAADAAMAAAAgABAAAAADAAMAAAAhABAAAAADAAMAAAAiABAAAAACAAQAAAAjABAAAAADAAMAAAAkABAAAAADAAMAAAAlABAAAAADAAMAAAAmABAAAAABAAQAAAAnABAAAAADAAMAAAAoABAAAAADAAMAAAApABAAAAADAAMAAAAqABAAAAADAAMAAAArABAAAAADAAMAAAAsABAAAAADAAMAAAAtABAAAAADAAMAAAAuABAAAAADAAMAAAAvABAAAAADAAMAAAAwABAAAAADAAMAAAAxABAAAAADAAMAAAAyABAAAAADAAMAAAAzABAAAAADAAMAAAA0ABAAAAADAAMAAAA1ABAAAAADAAMAAAA2ABAAAAADAAMAAAA3ABAAAAADAAMAAAA4ABAAAAADAAMAAAA5ABAAAAADAAMAAAA6ABAAAAADAAMAAAA7ABAAAAABAAQAAAA=")
 tile_set = ExtResource("13_1g2cb")
 
-[node name="PlayerStart" type="Marker2D" parent="." unique_id=1459066859]
+[node name="PlayerStart" type="Marker2D" parent="." unique_id=77900761]
 position = Vector2(72, 228)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1988649842]
+[node name="Doors" type="Node2D" parent="." unique_id=1225815534]
 
-[node name="Door_r02_izq" parent="Doors" unique_id=20643378 instance=ExtResource("14_ajs2l")]
+[node name="Door_r02_izq" parent="Doors" unique_id=928796029 instance=ExtResource("14_ajs2l")]
 position = Vector2(8, 216)
 door_id = "r02_izq"
 target_room_path = "res://world/rooms/room_01.tscn"
 target_door_id = "r01_der"
 
-[node name="Door_r02_der" parent="Doors" unique_id=510657024 instance=ExtResource("14_ajs2l")]
+[node name="Door_r02_der" parent="Doors" unique_id=1683985055 instance=ExtResource("14_ajs2l")]
 position = Vector2(952, 216)
 door_id = "r02_der"
 target_room_path = "res://world/rooms/room_03.tscn"
 target_door_id = "r03_izq"
 spawn_offset = Vector2(-32, 12)
 
-[node name="Objects" type="Node2D" parent="." unique_id=1677351582]
+[node name="Objects" type="Node2D" parent="." unique_id=70039350]
 
-[node name="AbilityPickup_DoubleJump" parent="Objects" unique_id=1346357009 instance=ExtResource("15_tghb7")]
+[node name="AbilityPickup_DoubleJump" parent="Objects" unique_id=1087908386 instance=ExtResource("15_tghb7")]
 position = Vector2(888, 88)
 pickup_id = "pickup_alas"
 
-[node name="Spikes1" parent="Objects" unique_id=2106399420 instance=ExtResource("16_v17vd")]
+[node name="Spikes1" parent="Objects" unique_id=697847626 instance=ExtResource("16_v17vd")]
 position = Vector2(504, 232)
 
-[node name="Spikes2" parent="Objects" unique_id=239313244 instance=ExtResource("16_v17vd")]
+[node name="Spikes2" parent="Objects" unique_id=1633629532 instance=ExtResource("16_v17vd")]
 position = Vector2(520, 232)
 
-[node name="Spikes3" parent="Objects" unique_id=1093755594 instance=ExtResource("16_v17vd")]
+[node name="Spikes3" parent="Objects" unique_id=2141962111 instance=ExtResource("16_v17vd")]
 position = Vector2(536, 232)
 
-[node name="Spikes4" parent="Objects" unique_id=1423873339 instance=ExtResource("16_v17vd")]
+[node name="Spikes4" parent="Objects" unique_id=476332345 instance=ExtResource("16_v17vd")]
 position = Vector2(552, 232)
 
-[node name="Enemies" type="Node2D" parent="." unique_id=2007858087]
+[node name="Enemies" type="Node2D" parent="." unique_id=1339881776]
 
-[node name="Moth1" parent="Enemies" unique_id=523082890 instance=ExtResource("17_bg367")]
+[node name="Moth1" parent="Enemies" unique_id=716612272 instance=ExtResource("17_bg367")]
 position = Vector2(488, 104)
 
-[node name="Beetle1" parent="Enemies" unique_id=1496524004 instance=ExtResource("18_gbg5x")]
+[node name="Beetle1" parent="Enemies" unique_id=289466911 instance=ExtResource("18_gbg5x")]
 position = Vector2(200, 235)
 
-[node name="Beetle2" parent="Enemies" unique_id=997238483 instance=ExtResource("18_gbg5x")]
+[node name="Beetle2" parent="Enemies" unique_id=735518598 instance=ExtResource("18_gbg5x")]
 position = Vector2(680, 235)
 start_direction = 1

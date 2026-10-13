@@ -19,6 +19,9 @@ const SHOCKWAVE := preload("res://entities/bosses/recolectora/shockwave.tscn")
 const SCRAP := preload("res://entities/bosses/recolectora/falling_scrap.tscn")
 const SPARK := preload("res://fx/hit_spark.tscn")
 const DUST := preload("res://fx/dust_puff.tscn")
+const CHUNK := preload("res://entities/player/powers/flesh_chunk.tscn")
+## Cada cuánto daño suelta un trozo que Ninfa puede devorar para curarse.
+const DAMAGE_PER_CHUNK := 5
 
 @export var boss_name: String = "La Recolectora"
 @export var gravity: float = 900.0
@@ -42,6 +45,8 @@ var _rain_left: int = 0
 var _rain_tick: float = 0.0
 var _anim_time: float = 0.0
 var _charge_start_x: float = 0.0
+var _last_health: int = -1
+var _damage_acc: int = 0
 
 @onready var head: Node2D = $Visual/Head
 @onready var body: Node2D = $Visual/Body
@@ -49,11 +54,12 @@ var _charge_start_x: float = 0.0
 @onready var _body_base_y: float = body.position.y
 @onready var legs_near: Array[Node2D] = [$Visual/LegNear1, $Visual/LegNear2, $Visual/LegNear3]
 @onready var legs_far: Array[Node2D] = [$Visual/LegFar1, $Visual/LegFar2, $Visual/LegFar3]
-@onready var contact: HitboxComponent = $HitboxComponent
 
 
 func _setup() -> void:
 	knockback_resist = 1.0
+	can_be_devoured = false  # demasiado grande: suelta trozos en vez de quedar aturdida
+	_last_health = health.max_health
 	health.health_changed.connect(_on_health_changed)
 
 
@@ -215,11 +221,23 @@ func _drop_scrap() -> void:
 
 func _on_health_changed(current: int, max_value: int) -> void:
 	EventBus.boss_health_changed.emit(current, max_value)
+	if _last_health >= 0 and current < _last_health and current > 0:
+		_damage_acc += _last_health - current
+		if _damage_acc >= DAMAGE_PER_CHUNK:
+			_damage_acc -= DAMAGE_PER_CHUNK
+			_drop_chunk.call_deferred()
+	_last_health = current
 	if phase == 1 and current <= max_value / 2 and current > 0:
 		phase = 2
 		body.modulate = Color(1.2, 0.85, 0.8)
 		GameFeel.shake(6.0, 0.8)
 		EventBus.message_requested.emit("¡La Recolectora se enfurece!", 2.0)
+
+
+func _drop_chunk() -> void:
+	var chunk := CHUNK.instantiate()
+	get_parent().add_child(chunk)
+	chunk.global_position = global_position + Vector2(0, -40)
 
 
 func die() -> void:

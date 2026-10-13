@@ -16,6 +16,9 @@ signal health_depleted
 			health_changed.emit(current_health, max_health)
 
 var current_health: int
+## Si es true, el primer golpe que lo mataría lo deja con 1 de vida (después se apaga solo).
+## Los enemigos devorables lo usan para quedar SIEMPRE aturdidos antes de morir.
+var survive_once: bool = false
 
 
 func _ready() -> void:
@@ -28,6 +31,9 @@ func take_damage(amount: int) -> void:
 		return
 
 	current_health = clampi(current_health - amount, 0, max_health)
+	if current_health == 0 and survive_once:
+		survive_once = false
+		current_health = 1
 	health_changed.emit(current_health, max_health)
 
 	if current_health == 0:
