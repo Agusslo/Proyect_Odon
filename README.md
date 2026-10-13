@@ -82,11 +82,12 @@ En muchos países a la libélula le dicen *caballito del diablo*. Ahora tienen r
 | Acción | Teclado | Joystick |
 |---|---|---|
 | Moverse | A / D o flechas | Stick izq. / cruceta |
-| Saltar (mantener = más alto) | Espacio o Z | A |
+| Saltar (mantener = más alto y flota en la cima) | Espacio o Z | A |
+| Caer más rápido | Mantener abajo en el aire | Stick abajo |
 | Atacar (combo de 3; + arriba / + abajo en el aire) | J o X | X |
 | **Devorar** | L o F | LB |
 | **Garra Infernal** | I o V | B |
-| Galope del Diablo (dash) | K, C o Shift | RB |
+| Galope del Diablo (dardo en 8 direcciones) | K, C o Shift (+ dirección) | RB |
 | Planear | Mantener saltar mientras caés | A |
 | Sumergirse en la charca | E | Y |
 | Pausa | Esc | Start |
@@ -96,7 +97,9 @@ En muchos países a la libélula le dicen *caballito del diablo*. Ahora tienen r
 - **Combo:** apretá J tres veces seguidas. El tercer golpe es el **Zarpazo**: más daño y empuje. Si apretás un poquito antes de que termine el golpe anterior, **no se pierde**: sale apenas se pueda (buffer). Pegar no te frena ni te empuja: podés seguir corriendo mientras atacás.
 - **Devorar:** pegale a un enemigo hasta que quede **aturdido brillando en rojo** (nunca se muere sin aturdirse antes). Acercate y apretá **L**: te curás 1 y ganás Brasas. Si le volvés a pegar, muere sin comértelo.
 - **Garra Infernal:** apretá **I** cuando tengas **al menos un segmento de Brasas lleno** (late y brilla cuando está listo). Si no alcanza, la barra tiembla en rojo y aparece un aviso. Para llenar Brasas: pegale a enemigos (el zarpazo da el doble) o devoralos.
-- **Galope del Diablo:** **K** o Shift. Mientras dura sos intocable y quemás lo que atravesás.
+- **Galope del Diablo:** **K** o Shift + una dirección (las 8: también arriba y en diagonal). Sale como un dardo, sos intocable y quemás lo que atravesás. En el aire **frena en seco** con un aleteo, como una libélula. Uno por salto (se recarga al tocar el piso o con un pogo).
+- **Salto galopado:** galopá en el piso y saltá durante el galope: conservás la velocidad y llegás mucho más lejos.
+- **Pelea en el aire:** pegar de costado en el aire te deja suspendida un instante (hasta 3 veces por salto). Con abajo + J hacés pogo sobre enemigos y pinches.
 - **Alas de Ceniza:** saltar otra vez en el aire. **Planeo:** mantener saltar mientras caés.
 - Alas, Galope y Planeo se consiguen recorriendo el mapa. Para probarlos todos de una, apretá **F1** en el juego (también llena las Brasas).
 
@@ -120,10 +123,11 @@ Ninfa sale **directamente del concepto** (`art_source/ninfa/concepto.png`), sin 
 
 1. La vista de costado se separó en partes: cabeza, alas, brazo demoníaco, katana, piernas y cuerpo (`art_source/ninfa/partes/`).
 2. `art_source/ninfa/herramientas/ninfa_anim.py` anima esas partes rotándolas sobre sus articulaciones, y **convierte cada cuadro a pixel art** (56 px de alto) con una paleta fija, contorno de 1 px, ojo blanco y grietas de fuego. Cada animación son unas pocas **poses clave** que se interpolan con suavizado; la capa de la cintura para abajo es una parte aparte que flamea, y las alas tiemblan como las de una libélula.
+   **Silueta:** `PART_SCALE` (arriba del archivo) estiliza las proporciones sin cambiar el diseño: torso, capa y brazo más angostos, capa más corta, botas más largas y alas de libélula largas y finas. Las alas se pintan **iridiscentes** (violeta → turquesa → dorado) como en el concepto. Si quieren a Ninfa más flaca o más alta, se tocan esos números.
 3. `build_ninfa_frames.gd` arma `entities/player/ninfa_frames.tres` (un `SpriteFrames`) con las tiras de `assets/characters/ninfa/`.
 4. En el juego, `player.gd` agrega el "jugo": se estira al saltar, se aplasta al caer, se inclina al correr y hace un pequeño rebote al darse vuelta (`_squash()`).
 
-Animaciones: `idle, run, jump, fall, attack, attack2, zarpazo, attack_up, attack_down, dash, glide, hurt, devour, cast, death, rest`.
+Animaciones: `idle, run, jump, fall, attack, attack2, zarpazo, attack_up, attack_down, dash, glide, hurt, devour, cast, death, rest` y las de atacar corriendo `attack_run, attack2_run, zarpazo_run`.
 
 **Para retocar una animación**: en `ninfa_anim.py` cada animación es una lista de poses (ángulo por parte). Cambiá los números, corré:
 ```
@@ -242,11 +246,27 @@ Lo más fácil: duplicar `room_05.tscn`. Desde cero: raíz `Node2D` con `room.gd
 
 En el Inspector del nodo `Player` están todos los números agrupados: movimiento, salto, Galope, combate (ventana del combo), Brasas (cuánto da cada golpe, cuánto cuesta la Garra, cuándo se apagan), Devorar (alcance) y Hambre (cada cuánto).
 
+Qué hace cada truco de "game feel" (todo en `entities/player/player.gd`, explicado arriba del archivo):
+
+| Truco | Qué resuelve | Número en el Inspector |
+|---|---|---|
+| **Buffer de entradas** | Saltar, pegar, galopar, Garra y Devorar apretados un poquito antes de tiempo **no se pierden**: salen en el primer cuadro posible | `jump_buffer_time`, `attack_buffer_time`, `action_buffer_time` |
+| **Coyote time** | Podés saltar un instante después de dejar el borde | `coyote_time` |
+| **Salto variable + flote en la cima** | Soltar corta el salto; mantener flota un poco arriba | `jump_cut`, `apex_threshold`, `apex_gravity_mult` |
+| **Caída rápida** | Abajo en el aire para bajar ya | `fast_fall_multiplier` |
+| **Giro en seco** | Darse vuelta no patina | `turn_acceleration` |
+| **Corrección de esquinas** | Si la cabeza roza el borde de un techo, te desliza en vez de frenarte | `corner_correction` |
+| **Cancelaciones** | Saltar o galopar corta la recuperación del ataque, el final de la Garra (ya lanzada) y de Devorar (ya mordiste). Galopar te saca de un golpe recibido | `hurt_dash_cancel` |
+| **Moverse y pegar a la vez** | El ataque nunca toca la velocidad horizontal. Corriendo se usan animaciones `*_run` (torso ataca, piernas corren) | — |
+| **Cámara** | Temblor suave (ruido, no saltos) y un empujoncito hacia donde pegás | en `GameFeel` |
+
+**¿Por qué no hay AnimationTree?** Ninfa está dibujada cuadro por cuadro (AnimatedSprite2D), no con huesos. El AnimationTree sirve para mezclar animaciones de esqueleto o propiedades; con sprites no se puede "mezclar" la mitad de arriba con la de abajo en vivo. Por eso la mezcla está **pre-hecha** al generar el arte: `attack_run`, `attack2_run` y `zarpazo_run` son el torso atacando con las piernas corriendo, y el código cambia entre la versión quieta y la corriendo **sin reiniciar el golpe**. La máquina de estados está en código (`enum State` + `_update_state()`), que es más fácil de leer y de testear.
+
 ---
 
 ## Pruebas
 
-El juego tiene un playtest automático que recorre las 8 salas y controla 115 cosas (incluye: pegar quieta no te mueve, correr y pegar a la vez, buffer del combo, HUD de Brasas) (combo, aturdir y devorar, Brasas, Hambre, charcas, Garra, Galope, jefe, guardado, muerte, pausa). No viene en el zip para no ensuciar el proyecto; si lo quieren, pídanlo.
+El juego tiene un playtest automático que recorre las 8 salas y controla 123 cosas (incluye: coyote time, jump buffer, buffer del combo, cancelaciones, galope en 8 direcciones, salto galopado, suspensión en el aire, HUD de Brasas) (combo, aturdir y devorar, Brasas, Hambre, charcas, Garra, Galope, jefe, guardado, muerte, pausa). No viene en el zip para no ensuciar el proyecto; si lo quieren, pídanlo.
 
 ## Próximos pasos
 

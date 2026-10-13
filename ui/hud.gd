@@ -112,7 +112,16 @@ func _on_energy_changed(current: int, max_value: int) -> void:
 		var seg := _segments[i]
 		seg.max_value = per
 		var target := clampf(current - i * per, 0.0, per)
-		seg.create_tween().tween_property(seg, "value", target, 0.15)
+		var tween := seg.create_tween()
+		if target < seg.value - 1.0:
+			# Se gastaron Brasas: el segmento destella y se vacía con un pequeño retraso.
+			seg.modulate = Color(2.4, 2.0, 1.6)
+			tween.set_parallel()
+			tween.tween_property(seg, "modulate", Color.WHITE, 0.35)
+			tween.tween_property(seg, "value", target, 0.3).set_delay(0.08) \
+				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		else:
+			tween.tween_property(seg, "value", target, 0.18).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		var full := target >= per - 0.01
 		if full and not _seg_full[i]:
 			_pop(seg, 1.35)                       # el segmento se llenó: ¡listo para una Garra!

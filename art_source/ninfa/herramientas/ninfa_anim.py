@@ -29,6 +29,26 @@ for name, parent, pivot in rig["parts"]:
     a[..., 3] = np.where(m, a[..., 3], 0)
     parts[name] = {"img": Image.fromarray(a), "parent": parent, "pivot": np.array(pivot, float)}
 
+# Alas iridiscentes (como en el concepto): violeta -> turquesa -> dorado según la posición,
+# conservando las venas oscuras del dibujo original.
+def _iridescent(img):
+    a = np.array(img).astype(np.float32)
+    h, w = a.shape[:2]
+    yy, xx = np.mgrid[0:h, 0:w]
+    t = ((xx / w) * 0.7 + (yy / h) * 0.5) * 2.2 % 1.0
+    stops = np.array([[150, 130, 220], [110, 200, 215], [215, 200, 140], [190, 130, 210], [150, 130, 220]], np.float32)
+    k = t * (len(stops) - 1)
+    i0 = np.floor(k).astype(int)
+    f = (k - i0)[..., None]
+    col = stops[i0] * (1 - f) + stops[np.minimum(i0 + 1, len(stops) - 1)] * f
+    lum = a[..., :3].mean(-1, keepdims=True) / 255.0
+    vein = np.clip(lum * 1.6, 0.35, 1.15)
+    a[..., :3] = np.clip(col * vein * 0.72 + a[..., :3] * 0.38, 0, 255)
+    return Image.fromarray(a.astype(np.uint8))
+
+
+parts["wings"]["img"] = _iridescent(parts["wings"]["img"])
+
 # capas emisivas: el ojo (blanco) y las grietas de fuego del brazo
 head_a = np.array(parts["head"]["img"]).astype(int)
 eye = (head_a[..., :3].sum(2) > 640) & (head_a[..., 3] > 0)
@@ -50,12 +70,41 @@ def Sc(sx, sy):
     return np.array([[sx, 0, 0], [0, sy, 0], [0, 0, 1.0]])
 
 
+# --- Silueta: proporciones de cada parte (fijas en todas las animaciones).
+# El recorte del concepto, achicado a 56 px, quedaba "gordo": capa ancha, brazo grueso
+# y piernas cortas. Acá se estiliza sin cambiar el diseño: torso y capa más angostos,
+# capa más corta, piernas (botas) más largas y alas de libélula más largas y finas.
+PART_SCALE = {
+    "body": (0.80, 1.0),
+    "hem": (0.78, 0.80),
+    "arm": (0.82, 0.98),
+    "leg_back": (0.92, 1.45),
+    "leg_front": (0.92, 1.45),
+    "wings": (1.18, 0.78),
+    "head": (0.96, 0.98),
+    "katana": (1.0, 1.0),
+}
+LEG_LEN = 71.0
+LIFT = LEG_LEN * (PART_SCALE["leg_front"][1] - 1.0)   # se sube el cuerpo para que las botas sigan pisando el piso
+
+
 def world(pose):
+    """Matrices de dibujo de cada parte: jerarquía (world_raw) + la escala propia de la silueta."""
+    Wm = world_raw(pose)
+    out = {}
+    for name in Wm:
+        sx, sy = PART_SCALE.get(name, (1.0, 1.0))
+        pv = HIP if name == "body" else parts[name]["pivot"]
+        out[name] = Wm[name] @ T(pv[0], pv[1]) @ Sc(sx, sy) @ T(-pv[0], -pv[1])
+    return out
+
+
+def world_raw(pose):
     """pose: {parte: ángulo, 'off': (dx,dy) del cuerpo, 'rot': giro del cuerpo, 'sx','sy': estirar, '<parte>_off'}."""
     Wm = {}
     off = pose.get("off", (0, 0))
     sq = Sc(pose.get("sx", 1.0), pose.get("sy", 1.0))
-    base = T(*(ANCHOR + np.array(off))) @ R(pose.get("rot", 0)) @ sq @ T(*(-HIP))
+    base = T(*(ANCHOR + np.array(off) + np.array([0.0, -LIFT]))) @ R(pose.get("rot", 0)) @ sq @ T(*(-HIP))
     Wm["body"] = base
     for name in ["head", "arm", "katana", "wings", "leg_back", "leg_front", "hem"]:
         p = parts[name]
@@ -121,11 +170,12 @@ def grade(rgb):
     x = np.clip((x - 0.45) * 1.08 + 0.45, 0, 1)
     g = x.mean(-1, keepdims=True)
     blue = np.clip((x[..., 2:3] - x[..., 0:1]) * 4, 0, 1)  # el azul (casco, alas) se satura más
-    x = np.clip(g + (x - g) * (1.05 + 0.5 * blue), 0, 1)
+    red = np.clip((x[..., 0:1] - x[..., 2:3]) * 4, 0, 1)   # la faja roja y las botas también
+    x = np.clip(g + (x - g) * (1.05 + 0.5 * blue + 0.6 * red), 0, 1)
     return x * 255.0
 
 
-def build_palette(rest_pose, n=26):
+def build_palette(rest_pose, n=30):
     rgb, a, _ = downscale(rest_pose)
     pts = grade(rgb[a > 110])
     cent, _ = kmeans2(pts.astype(np.float64), n, minit="++", seed=3)
